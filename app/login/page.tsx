@@ -28,7 +28,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex h-screen items-center justify-center bg-gray-100">
-      <form onSubmit={handleLogin} className="p-5 m-10 bg-white rounded-xl shadow-lg flex flex-col gap-4 w-96">
+      <form onSubmit={handleLogin} className="p-5 m-4 bg-white rounded-xl shadow-lg flex flex-col gap-4 w-96">
         <h1 className="text-2xl font-bold text-gray-800 text-center">Admin Artenea</h1>
         <p className="text-sm text-gray-500 text-center mb-4">Solo acceso autorizado</p>
         
