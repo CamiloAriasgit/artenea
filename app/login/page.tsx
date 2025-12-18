@@ -29,7 +29,7 @@ export default function LoginPage() {
   return (
     <div className="flex h-screen items-center justify-center bg-gray-100">
       <form onSubmit={handleLogin} className="p-8 bg-white rounded-xl shadow-lg flex flex-col gap-4 w-96">
-        <h1 className="text-2xl font-bold text-gray-800 text-center">Admin Galería</h1>
+        <h1 className="text-2xl font-bold text-gray-800 text-center">Admin Artenea</h1>
         <p className="text-sm text-gray-500 text-center mb-4">Solo acceso autorizado</p>
         
         {errorMsg && <p className="text-red-500 text-sm bg-red-50 p-2 rounded text-center">{errorMsg}</p>}
@@ -38,17 +38,17 @@ export default function LoginPage() {
           name="email" 
           type="email" 
           placeholder="Correo electrónico" 
-          className="p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-black" 
+          className="p-3 border rounded-lg focus:ring-2 focus:ring-violet-500 outline-none text-black" 
           required 
         />
         <input 
           name="password" 
           type="password" 
           placeholder="Contraseña" 
-          className="p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-black" 
+          className="p-3 border rounded-lg focus:ring-2 focus:ring-violet-500 outline-none text-black" 
           required 
         />
-        <button type="submit" className="bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 transition-colors mt-2">
+        <button type="submit" className="bg-violet-600 text-white p-3 rounded-lg font-bold hover:bg-violet-700 transition-colors mt-2">
           Entrar
         </button>
       </form>

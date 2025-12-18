@@ -83,7 +83,7 @@ export default function NuevoProducto() {
                 name="titulo" 
                 type="text" 
                 required 
-                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none text-black transition-all" 
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-violet-500 focus:bg-white outline-none text-black transition-all" 
                 placeholder="Ej: Atardecer en el mar" 
               />
             </div>
@@ -97,7 +97,7 @@ export default function NuevoProducto() {
                   type="number" 
                   step="0.01"
                   required 
-                  className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none text-black transition-all" 
+                  className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-violet-500 focus:bg-white outline-none text-black transition-all" 
                   placeholder="0.00" 
                 />
               </div>
@@ -105,7 +105,7 @@ export default function NuevoProducto() {
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Categoría</label>
                 <select 
                   name="categoria" 
-                  className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none text-black transition-all appearance-none"
+                  className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-violet-500 focus:bg-white outline-none text-black transition-all appearance-none"
                 >
                   <option value="Pintura">Pintura</option>
                   <option value="Escultura">Escultura</option>
@@ -120,7 +120,7 @@ export default function NuevoProducto() {
               <input 
                 name="medidas" 
                 type="text" 
-                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none text-black transition-all" 
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-violet-500 focus:bg-white outline-none text-black transition-all" 
                 placeholder="Ej: 50x70 cm" 
               />
             </div>
@@ -131,7 +131,7 @@ export default function NuevoProducto() {
               <textarea 
                 name="descripcion" 
                 rows={4} 
-                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none text-black transition-all" 
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-violet-500 focus:bg-white outline-none text-black transition-all" 
                 placeholder="Describe la técnica, historia o materiales..."
               ></textarea>
             </div>
@@ -139,10 +139,10 @@ export default function NuevoProducto() {
             {/* Selector de Imagen Mejorado */}
             <div className="relative">
               <label className="block text-sm font-semibold text-gray-700 mb-2">Imagen de la Obra</label>
-              <div className="group relative flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all cursor-pointer">
+              <div className="group relative flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition-all cursor-pointer">
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <Upload className="w-8 h-8 text-gray-400 group-hover:text-blue-500 mb-2" />
-                  <p className="text-xs text-gray-500 group-hover:text-blue-600 font-medium text-center px-4">
+                  <Upload className="w-8 h-8 text-gray-400 group-hover:text-indigo-500 mb-2" />
+                  <p className="text-xs text-gray-500 group-hover:text-indigo-600 font-medium text-center px-4">
                     Toca para seleccionar o arrastra una imagen
                   </p>
                 </div>

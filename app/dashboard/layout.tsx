@@ -19,8 +19,8 @@ export default async function DashboardLayout({
     <div className="min-h-screen bg-gray-50">
       <nav className="fixed top-0 w-full z-50 bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center shadow-sm">
         <div className="flex gap-8 items-center">
-          <span className="font-bold text-xl text-gray-800 tracking-tight leading-none">
-            Artenea <span className="text-xs font-light text-gray-400 uppercase ml-1">Admin</span>
+          <span className="font-bold text-xl text-gray-800 tracking-tight leading-none flex items-center">
+            Artenea <span className="text-xs font-light bg-indigo-200 text-indigo-400 px-1 py-0.5 rounded-full tracking-widest ml-1">Admin</span>
           </span>
           
           {/* Navegación Desktop (se oculta en móvil) */}

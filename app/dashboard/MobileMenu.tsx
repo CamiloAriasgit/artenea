@@ -41,7 +41,7 @@ export default function MobileMenu({ email }: { email: string | undefined }) {
               <ExternalLink size={20} /> Ver Web
             </Link>
 
-            <div className="h-px bg-gray-100 my-2"></div>
+            <div className="h-px bg-gray-300 my-2"></div>
 
             {/* Info de Usuario y Logout */}
             <div className="flex flex-col gap-4">
