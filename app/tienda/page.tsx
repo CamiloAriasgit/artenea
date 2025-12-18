@@ -1,5 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
+import { ShoppingBag, LayoutGrid, Palette, Mountain, PenTool } from 'lucide-react'
 
 export default async function TiendaPage({
   searchParams,
@@ -9,81 +10,77 @@ export default async function TiendaPage({
   const supabase = await createClient()
   const { categoria } = await searchParams
 
-  // 1. Iniciamos la consulta
-  let query = supabase
-    .from('productos')
-    .select('*')
-    .order('created_at', { ascending: false })
-
-  // 2. Si hay una categoría seleccionada (y no es "Todos"), filtramos
+  let query = supabase.from('productos').select('*').order('created_at', { ascending: false })
   if (categoria && categoria !== 'Todos') {
     query = query.eq('categoria', categoria)
   }
+  const { data: obras } = await query
 
-  const { data: obras, error } = await query
-
-  const categorias = ['Todos', 'Pintura', 'Escultura', 'Dibujo']
+  const categorias = [
+    { name: 'Todos', icon: <LayoutGrid size={16} /> },
+    { name: 'Pintura', icon: <Palette size={16} /> },
+    { name: 'Escultura', icon: <Mountain size={16} /> },
+    { name: 'Dibujo', icon: <PenTool size={16} /> },
+  ]
 
   return (
-    <main className="min-h-screen bg-white">
-      <header className="py-12 px-6 border-b">
-        <h1 className="text-4xl font-light tracking-widest text-center uppercase text-black">Galería de Arte</h1>
+    <main className="min-h-screen bg-white pb-20">
+      <header className="py-4 px-6 border-b border-gray-100 flex items-center gap-2">
+        <div className="bg-violet-100 p-3 rounded-full text-violet-600 mb-2">
+          <ShoppingBag size={20} />
+        </div>
+        <h1 className="text-xl font-light tracking-[0.2em] uppercase text-black">Tienda</h1>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* 3. Botones de Filtro */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+      <div className="max-w-7xl mx-auto px-4 py-4">
+        {/* Filtros con Scroll Horizontal en móvil */}
+        <div className="flex overflow-x-auto pb-4 md:pb-0 md:flex-wrap md:justify-center gap-3 no-scrollbar scroll-smooth">
           {categorias.map((cat) => (
             <Link
-              key={cat}
-              href={cat === 'Todos' ? '/tienda' : `/tienda?categoria=${cat}`}
-              className={`px-6 py-2 rounded-full text-sm uppercase tracking-widest transition-all border ${
-                (categoria === cat) || (!categoria && cat === 'Todos')
-                  ? 'bg-black text-white border-black'
-                  : 'bg-white text-gray-500 border-gray-200 hover:border-black hover:text-black'
+              key={cat.name}
+              href={cat.name === 'Todos' ? '/tienda' : `/tienda?categoria=${cat.name}`}
+              className={`flex items-center gap-2 px-3 py-2.5 rounded-full text-xs uppercase tracking-widest transition-all border shrink-0 ${
+                (categoria === cat.name) || (!categoria && cat.name === 'Todos')
+                  ? 'bg-violet-600 text-white border-violet-600 shadow-lg shadow-violet-100'
+                  : 'bg-white text-gray-500 border-gray-100 hover:border-violet-300 hover:text-violet-600'
               }`}
             >
-              {cat}
+              {cat.icon}
+              {cat.name}
             </Link>
           ))}
         </div>
 
         {/* Grid de productos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mt-12">
           {obras?.map((obra) => (
-            <div key={obra.id} className="group cursor-pointer">
-              <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
+            <Link href={`/tienda/${obra.id}`} key={obra.id} className="group">
+              <div className="relative aspect-[4/5] overflow-hidden bg-gray-50 rounded-sm">
                 <img 
                   src={obra.imagen_url} 
                   alt={obra.titulo}
-                  className="object-cover w-full h-full grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 ease-in-out group-hover:scale-105"
+                  className="object-cover w-full h-full transition-transform duration-1000 group-hover:scale-105"
                 />
               </div>
-              <div className="mt-6 space-y-1 text-black">
-                <div className="flex justify-between items-baseline">
-                  <h3 className="text-lg font-medium uppercase tracking-tighter">{obra.titulo}</h3>
-                  <span className="text-gray-600 font-light">${obra.price || obra.precio}</span>
+              <div className="mt-6 space-y-2">
+                <div className="flex justify-between items-start">
+                  <h3 className="text-lg font-medium text-black uppercase tracking-tight group-hover:text-violet-600 transition-colors">
+                    {obra.titulo}
+                  </h3>
+                  <span className="text-violet-600 font-semibold">${obra.precio}</span>
                 </div>
-                <p className="text-sm text-gray-400 font-light italic">
+                <p className="text-xs text-gray-400 uppercase tracking-widest leading-none">
                   {obra.categoria} — {obra.medidas}
                 </p>
-                <div className="pt-4 border-t border-gray-50 mt-4">
-                   <p className="text-sm text-gray-600 line-clamp-2 mb-4">{obra.descripcion}</p>
-                   <button className="text-xs uppercase tracking-widest border-b border-black pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors">
-                     Consultar disponibilidad
-                   </button>
+                <div className="pt-4">
+                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 border-b border-gray-200 pb-1 group-hover:border-violet-600 group-hover:text-violet-600 transition-all">
+                     Ver detalles
+                   </span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
-
-        {obras?.length === 0 && (
-          <div className="text-center py-20">
-            <p className="text-gray-500">No se encontraron obras en la categoría "{categoria}".</p>
-            <Link href="/tienda" className="text-blue-600 underline mt-2 inline-block">Ver todo el catálogo</Link>
-          </div>
-        )}
       </div>
     </main>
   )
