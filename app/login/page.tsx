@@ -21,7 +21,7 @@ export default function LoginPage() {
     if (error) {
       setErrorMsg("Credenciales inválidas. Intenta de nuevo.")
     } else {
-      router.push('/dashboard/nuevo') // Te mandamos directo al formulario de carga
+      router.push('/dashboard') // Te mandamos directo al formulario de carga
       router.refresh()
     }
   }
