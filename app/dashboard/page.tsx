@@ -34,10 +34,10 @@ export default async function DashboardPage() {
     <div className="max-w-5xl mx-auto py-6 px-2">
       {/* Encabezado */}
       <div className="flex justify-between items-center mb-6 px-2">
-        <h1 className="text-xl md:text-2xl font-bold text-gray-800">Gestionar Obras</h1>
+        <h1 className="text-xl md:text-2xl font-bold text-gray-700">Gestionar Obras</h1>
         <Link 
           href="/dashboard/nuevo" 
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+          className="bg-violet-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-violet-700 transition-colors"
         >
           + Nueva
         </Link>
@@ -52,7 +52,7 @@ export default async function DashboardPage() {
               <div className="flex flex-col">
                 <span className="font-bold text-gray-900 text-sm line-clamp-1">{obra.titulo}</span>
                 <span className="text-xs text-gray-500">{obra.categoria}</span>
-                <span className="text-sm font-semibold text-blue-600">${obra.precio}</span>
+                <span className="text-sm font-semibold text-green-600">${obra.precio}</span>
               </div>
             </div>
             <BotonEliminar id={obra.id} imageUrl={obra.imagen_url} onDelete={eliminarObra} />
@@ -81,7 +81,7 @@ export default async function DashboardPage() {
                   </div>
                 </td>
                 <td className="px-6 py-4 text-gray-600">{obra.categoria}</td>
-                <td className="px-6 py-4 font-medium">${obra.precio}</td>
+                <td className="px-6 py-4 font-medium text-green-600">${obra.precio}</td>
                 <td className="px-6 py-4 text-right">
                   <BotonEliminar id={obra.id} imageUrl={obra.imagen_url} onDelete={eliminarObra} />
                 </td>

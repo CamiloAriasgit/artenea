@@ -51,7 +51,7 @@ export default function MobileMenu({ email }: { email: string | undefined }) {
               <form action="/auth/signout" method="post">
                 <button 
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 bg-red-50 text-red-600 py-3 rounded-xl font-bold"
+                  className="w-full flex items-center justify-center gap-2 bg-red-100 text-red-600 py-3 rounded-xl font-bold transition-colors"
                 >
                   <LogOut size={20} /> Cerrar Sesión
                 </button>

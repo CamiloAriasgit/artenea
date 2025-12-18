@@ -25,13 +25,13 @@ export default async function DashboardLayout({
           
           {/* Navegación Desktop (se oculta en móvil) */}
           <div className="hidden md:flex gap-6">
-            <Link href="/dashboard" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
+            <Link href="/dashboard" className="text-sm font-medium text-gray-600 hover:text-violet-600 transition-colors">
               Lista de Obras
             </Link>
-            <Link href="/dashboard/nuevo" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
+            <Link href="/dashboard/nuevo" className="text-sm font-medium text-gray-600 hover:text-violet-600 transition-colors">
               + Añadir Nueva
             </Link>
-            <Link href="/tienda" target="_blank" className="text-sm font-medium text-gray-400 hover:text-black transition-colors">
+            <Link href="/tienda" target="_blank" className="text-sm font-medium text-gray-600 hover:text-violet-600 transition-colors">
               Ver Web ↗
             </Link>
           </div>
@@ -52,7 +52,7 @@ export default async function DashboardLayout({
       </nav>
 
       {/* Padding top para compensar el nav fixed */}
-      <main className="pt-24">
+      <main className="pt-20">
         {children}
       </main>
     </div>
