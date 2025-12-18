@@ -22,23 +22,23 @@ export default function MobileMenu({ email }: { email: string | undefined }) {
             <Link 
               href="/dashboard" 
               onClick={toggleMenu}
-              className="flex items-center gap-3 text-lg font-medium text-gray-700"
+              className="flex items-center gap-3 font-medium text-gray-700 hover:text-violet-600 transition-colors"
             >
               <List size={20} /> Lista de Obras
             </Link>
             <Link 
               href="/dashboard/nuevo" 
               onClick={toggleMenu}
-              className="flex items-center gap-3 text-lg font-medium text-gray-700"
+              className="flex items-center gap-3 font-medium text-gray-700 hover:text-violet-600 transition-colors"
             >
-              <PlusCircle size={20} /> + Añadir Nueva
+              <PlusCircle size={20} />Añadir Nueva
             </Link>
             <Link 
               href="/tienda" 
               target="_blank" 
-              className="flex items-center gap-3 text-lg font-medium text-gray-400"
+              className="flex items-center gap-3 font-medium text-gray-700 hover:text-violet-600 transition-colors"
             >
-              <ExternalLink size={20} /> Ver Web ↗
+              <ExternalLink size={20} /> Ver Web
             </Link>
 
             <div className="h-px bg-gray-100 my-2"></div>
