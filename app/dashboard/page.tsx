@@ -32,7 +32,7 @@ export default async function DashboardPage() {
   if (error) return <p className="text-black">Error al cargar gestión.</p>
 
   return (
-    <div className="max-w-5xl mx-auto py-10 px-4">
+    <div className="max-w-5xl mx-auto py-10 px-2">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold text-gray-800">Gestionar Obras</h1>
         <Link 

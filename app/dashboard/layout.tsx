@@ -52,7 +52,7 @@ export default async function DashboardLayout({
       </nav>
 
       {/* Padding top para compensar el nav fixed */}
-      <main className="pt-24 p-6">
+      <main className="pt-24">
         {children}
       </main>
     </div>
