@@ -11,7 +11,7 @@ export default function MobileMenu({ email }: { email: string | undefined }) {
   return (
     <div className="md:hidden">
       {/* Botón Hamburguesa */}
-      <button onClick={toggleMenu} className="p-2 text-gray-600 focus:outline-none bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+      <button onClick={toggleMenu} className="p-2 text-gray-600 focus:outline-none bg-gray-00 rounded-lg hover:bg-gray-100 shadow shadow-violet-200 transition-colors">
         {isOpen ? <X size={28} /> : <Menu size={28} />}
       </button>
 
