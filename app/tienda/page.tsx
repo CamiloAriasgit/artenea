@@ -1,6 +1,8 @@
 import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
 import { ShoppingBag, LayoutGrid, Palette, Mountain, PenTool } from 'lucide-react'
+import BotonCompartir from './components/BotonCompartir'
+import BotonDetalles from './components/BotonDetalles' // Nuevo import
 
 export default async function TiendaPage({
   searchParams,
@@ -51,11 +53,15 @@ export default async function TiendaPage({
           ))}
         </div>
 
-        {/* Grid de productos ajustado a 2 columnas */}
+        {/* Grid de productos */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-10 md:gap-x-8 md:gap-y-12 mt-12">
           {obras?.map((obra) => (
-            <Link href={`/tienda/${obra.id}`} key={obra.id} className="group flex bg-gray-100 p-2 shadow shadow-gray-300 rounded-sm flex-col">
-              {/* Contenedor sin aspecto fijo para respetar proporción real */}
+            <Link 
+              href={`/tienda/${obra.id}`} 
+              key={obra.id} 
+              className="group flex bg-gray-100 p-2 shadow shadow-gray-300 rounded-sm flex-col"
+            >
+              {/* Imagen con proporción real */}
               <div className="relative overflow-hidden bg-gray-50 rounded-sm">
                 <img 
                   src={obra.imagen_url} 
@@ -64,20 +70,23 @@ export default async function TiendaPage({
                 />
               </div>
               
-              <div className="mt-4 space-y-2">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-1">
-                  <h3 className="text-sm md:text-lg font-medium text-black uppercase tracking-tight group-hover:text-violet-600 transition-colors">
-                    {obra.titulo}
-                  </h3>
-                  <span className="text-green-600 font-semibold text-sm md:text-base">${obra.precio}</span>
+              <div className="mt-4 space-y-2 flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-1">
+                    <h3 className="text-sm md:text-lg font-medium text-black uppercase tracking-tight group-hover:text-violet-600 transition-colors">
+                      {obra.titulo}
+                    </h3>
+                    <span className="text-emerald-500 text-sm md:text-base">${obra.precio}</span>
+                  </div>
+                  <p className="text-[10px] md:text-xs text-gray-400 uppercase tracking-widest leading-none">
+                    {obra.categoria} — {obra.medidas}
+                  </p>
                 </div>
-                <p className="text-[10px] md:text-xs text-gray-400 uppercase tracking-widest leading-none">
-                  {obra.categoria} — {obra.medidas}
-                </p>
-                <div className="pt-2 md:pt-4">
-                   <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 border-b border-gray-200 pb-1 group-hover:border-violet-600 group-hover:text-violet-600 transition-all">
-                     Ver detalles
-                   </span>
+
+                {/* Acciones: Componentes separados */}
+                <div className="pt-2 md:pt-4 flex items-center justify-between mt-auto">
+                   <BotonDetalles />
+                   <BotonCompartir id={obra.id} titulo={obra.titulo} />
                 </div>
               </div>
             </Link>
