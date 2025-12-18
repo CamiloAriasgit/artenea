@@ -52,9 +52,9 @@ export default async function TiendaPage({
         </div>
 
         {/* Grid de productos ajustado a 2 columnas */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-8 md:gap-y-12 mt-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-10 md:gap-x-8 md:gap-y-12 mt-12">
           {obras?.map((obra) => (
-            <Link href={`/tienda/${obra.id}`} key={obra.id} className="group flex flex-col">
+            <Link href={`/tienda/${obra.id}`} key={obra.id} className="group flex bg-gray-100 p-2 shadow shadow-gray-300 rounded-sm flex-col">
               {/* Contenedor sin aspecto fijo para respetar proporción real */}
               <div className="relative overflow-hidden bg-gray-50 rounded-sm">
                 <img 
@@ -69,7 +69,7 @@ export default async function TiendaPage({
                   <h3 className="text-sm md:text-lg font-medium text-black uppercase tracking-tight group-hover:text-violet-600 transition-colors">
                     {obra.titulo}
                   </h3>
-                  <span className="text-violet-600 font-semibold text-sm md:text-base">${obra.precio}</span>
+                  <span className="text-green-600 font-semibold text-sm md:text-base">${obra.precio}</span>
                 </div>
                 <p className="text-[10px] md:text-xs text-gray-400 uppercase tracking-widest leading-none">
                   {obra.categoria} — {obra.medidas}
