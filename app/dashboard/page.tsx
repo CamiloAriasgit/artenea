@@ -59,7 +59,7 @@ export default async function DashboardPage() {
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-4">
                     <img src={obra.imagen_url} alt="" className="w-12 h-12 object-cover rounded-md" />
-                    <span className="font-medium hidden">{obra.titulo}</span>
+                    <span className="font-medium hidden md:block">{obra.titulo}</span>
                   </div>
                 </td>
                 <td className="px-6 py-4 text-gray-600">{obra.categoria}</td>
