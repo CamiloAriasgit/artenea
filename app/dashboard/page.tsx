@@ -1,7 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
 import { revalidatePath } from 'next/cache'
-import BotonEliminar from './BotonEliminar' // Importamos el nuevo componente
+import BotonEliminar from './BotonEliminar'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -11,7 +11,6 @@ export default async function DashboardPage() {
     .select('*')
     .order('created_at', { ascending: false })
 
-  // Esta función se queda aquí porque es una Server Action
   async function eliminarObra(formData: FormData) {
     'use server'
     const id = formData.get('id') as string
@@ -29,21 +28,40 @@ export default async function DashboardPage() {
     revalidatePath('/tienda')
   }
 
-  if (error) return <p className="text-black">Error al cargar gestión.</p>
+  if (error) return <p className="text-black p-4">Error al cargar gestión.</p>
 
   return (
-    <div className="max-w-5xl mx-auto py-10 px-2">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-gray-800">Gestionar Obras</h1>
+    <div className="max-w-5xl mx-auto py-6 px-2">
+      {/* Encabezado */}
+      <div className="flex justify-between items-center mb-6 px-2">
+        <h1 className="text-xl md:text-2xl font-bold text-gray-800">Gestionar Obras</h1>
         <Link 
           href="/dashboard/nuevo" 
-          className="bg-violet-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
         >
-          + Nueva Obra
+          + Nueva
         </Link>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden text-black">
+      {/* VISTA MÓVIL (Cards) - Se oculta en tablets/pc (md:hidden) */}
+      <div className="grid grid-cols-1 gap-3 md:hidden">
+        {obras?.map((obra) => (
+          <div key={obra.id} className="bg-white p-3 rounded-xl border border-gray-200 flex items-center justify-between shadow-sm">
+            <div className="flex items-center gap-3">
+              <img src={obra.imagen_url} alt="" className="w-16 h-16 object-cover rounded-lg" />
+              <div className="flex flex-col">
+                <span className="font-bold text-gray-900 text-sm line-clamp-1">{obra.titulo}</span>
+                <span className="text-xs text-gray-500">{obra.categoria}</span>
+                <span className="text-sm font-semibold text-blue-600">${obra.precio}</span>
+              </div>
+            </div>
+            <BotonEliminar id={obra.id} imageUrl={obra.imagen_url} onDelete={eliminarObra} />
+          </div>
+        ))}
+      </div>
+
+      {/* VISTA DESKTOP (Tabla) - Se oculta en móviles (hidden md:block) */}
+      <div className="hidden md:block bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden text-black">
         <table className="w-full text-left">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
@@ -59,28 +77,26 @@ export default async function DashboardPage() {
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-4">
                     <img src={obra.imagen_url} alt="" className="w-12 h-12 object-cover rounded-md" />
-                    <span className="font-medium hidden md:block">{obra.titulo}</span>
+                    <span className="font-medium">{obra.titulo}</span>
                   </div>
                 </td>
                 <td className="px-6 py-4 text-gray-600">{obra.categoria}</td>
                 <td className="px-6 py-4 font-medium">${obra.precio}</td>
                 <td className="px-6 py-4 text-right">
-                  {/* Usamos el componente de cliente aquí */}
-                  <BotonEliminar 
-                    id={obra.id} 
-                    imageUrl={obra.imagen_url} 
-                    onDelete={eliminarObra} 
-                  />
+                  <BotonEliminar id={obra.id} imageUrl={obra.imagen_url} onDelete={eliminarObra} />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        
-        {obras?.length === 0 && (
-          <div className="p-10 text-center text-gray-500">No hay obras publicadas aún.</div>
-        )}
       </div>
+
+      {/* Mensaje vacío */}
+      {obras?.length === 0 && (
+        <div className="p-20 text-center text-gray-500 bg-white rounded-xl border border-dashed">
+          No hay obras publicadas aún.
+        </div>
+      )}
     </div>
   )
 }

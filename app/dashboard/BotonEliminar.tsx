@@ -1,4 +1,5 @@
-"use client" // Indispensable para usar onClick
+"use client"
+import { Trash2 } from 'lucide-react' // Importamos el icono
 
 type Props = {
   id: string
@@ -13,14 +14,15 @@ export default function BotonEliminar({ id, imageUrl, onDelete }: Props) {
       <input type="hidden" name="imageUrl" value={imageUrl} />
       <button 
         type="submit"
-        className="text-red-600 hover:text-red-800 text-sm font-medium transition-colors"
+        className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
         onClick={(e) => {
           if (!confirm("¿Estás seguro de que quieres eliminar esta obra?")) {
             e.preventDefault();
           }
         }}
+        title="Eliminar obra"
       >
-        Eliminar
+        <Trash2 size={20} />
       </button>
     </form>
   )
