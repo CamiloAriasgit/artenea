@@ -37,7 +37,7 @@ export default async function DashboardPage() {
         <h1 className="text-2xl font-bold text-gray-800">Gestionar Obras</h1>
         <Link 
           href="/dashboard/nuevo" 
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          className="bg-violet-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
         >
           + Nueva Obra
         </Link>
