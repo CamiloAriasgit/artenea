@@ -33,7 +33,7 @@ export default async function TiendaPage({
       </header>
 
       <div className="max-w-7xl mx-auto px-4 py-4">
-        {/* Filtros con Scroll Horizontal en móvil */}
+        {/* Filtros */}
         <div className="flex overflow-x-auto pb-4 md:pb-0 md:flex-wrap md:justify-center gap-3 no-scrollbar scroll-smooth">
           {categorias.map((cat) => (
             <Link
@@ -51,29 +51,31 @@ export default async function TiendaPage({
           ))}
         </div>
 
-        {/* Grid de productos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mt-12">
+        {/* Grid de productos ajustado a 2 columnas */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-8 md:gap-y-12 mt-12">
           {obras?.map((obra) => (
-            <Link href={`/tienda/${obra.id}`} key={obra.id} className="group">
-              <div className="relative aspect-[4/5] overflow-hidden bg-gray-50 rounded-sm">
+            <Link href={`/tienda/${obra.id}`} key={obra.id} className="group flex flex-col">
+              {/* Contenedor sin aspecto fijo para respetar proporción real */}
+              <div className="relative overflow-hidden bg-gray-50 rounded-sm">
                 <img 
                   src={obra.imagen_url} 
                   alt={obra.titulo}
-                  className="object-cover w-full h-full transition-transform duration-1000 group-hover:scale-105"
+                  className="w-full h-auto object-contain transition-transform duration-1000 group-hover:scale-105"
                 />
               </div>
-              <div className="mt-6 space-y-2">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-lg font-medium text-black uppercase tracking-tight group-hover:text-violet-600 transition-colors">
+              
+              <div className="mt-4 space-y-2">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-1">
+                  <h3 className="text-sm md:text-lg font-medium text-black uppercase tracking-tight group-hover:text-violet-600 transition-colors">
                     {obra.titulo}
                   </h3>
-                  <span className="text-violet-600 font-semibold">${obra.precio}</span>
+                  <span className="text-violet-600 font-semibold text-sm md:text-base">${obra.precio}</span>
                 </div>
-                <p className="text-xs text-gray-400 uppercase tracking-widest leading-none">
+                <p className="text-[10px] md:text-xs text-gray-400 uppercase tracking-widest leading-none">
                   {obra.categoria} — {obra.medidas}
                 </p>
-                <div className="pt-4">
-                   <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 border-b border-gray-200 pb-1 group-hover:border-violet-600 group-hover:text-violet-600 transition-all">
+                <div className="pt-2 md:pt-4">
+                   <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 border-b border-gray-200 pb-1 group-hover:border-violet-600 group-hover:text-violet-600 transition-all">
                      Ver detalles
                    </span>
                 </div>
