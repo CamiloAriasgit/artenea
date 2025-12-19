@@ -2,7 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
 import { ShoppingBag, LayoutGrid, Palette, Mountain, PenTool } from 'lucide-react'
 import BotonCompartir from './components/BotonCompartir'
-import BotonDetalles from './components/BotonDetalles' // Nuevo import
+import BotonDetalles from './components/BotonDetalles'
 
 export default async function TiendaPage({
   searchParams,
@@ -27,64 +27,76 @@ export default async function TiendaPage({
 
   return (
     <main className="min-h-screen bg-white pb-20">
-      <header className="py-4 px-6 border-b border-gray-100 flex items-center gap-2">
-        <div className="bg-violet-100 p-3 rounded-full text-violet-600 mb-2">
-          <ShoppingBag size={20} />
-        </div>
-        <h1 className="text-xl font-light tracking-[0.2em] uppercase text-black">Tienda</h1>
-      </header>
+      
+      {/* SECCIÓN FIJA: Header y Filtros */}
+      <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100">
+        
+        {/* Header */}
+        <header className="py-3 px-6 flex items-center gap-2 max-w-7xl mx-auto">
+          <div className="bg-violet-100 p-2 rounded-full text-violet-600">
+            <ShoppingBag size={18} />
+          </div>
+          <h1 className="text-lg font-light tracking-[0.2em] uppercase text-gray-500 font-sans">Tienda</h1>
+        </header>
 
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        {/* Filtros */}
-        <div className="flex overflow-x-auto pb-4 md:pb-0 md:flex-wrap md:justify-center gap-3 no-scrollbar scroll-smooth">
-          {categorias.map((cat) => (
-            <Link
-              key={cat.name}
-              href={cat.name === 'Todos' ? '/tienda' : `/tienda?categoria=${cat.name}`}
-              className={`flex items-center gap-2 px-3 py-2.5 rounded-full text-xs uppercase tracking-widest transition-all border shrink-0 ${
-                (categoria === cat.name) || (!categoria && cat.name === 'Todos')
-                  ? 'bg-violet-600 text-white border-violet-600 shadow-lg shadow-violet-100'
-                  : 'bg-white text-gray-500 border-gray-100 hover:border-violet-300 hover:text-violet-600'
-              }`}
-            >
-              {cat.icon}
-              {cat.name}
-            </Link>
-          ))}
+        {/* Filtros: Centrados en PC, Scroll en Móvil */}
+        <div className="w-full pb-4 px-4 overflow-hidden">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex overflow-x-auto md:justify-center gap-2 no-scrollbar scroll-smooth">
+              {categorias.map((cat) => (
+                <Link
+                  key={cat.name}
+                  href={cat.name === 'Todos' ? '/tienda' : `/tienda?categoria=${cat.name}`}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-[10px] md:text-xs uppercase tracking-widest transition-all border shrink-0 ${
+                    (categoria === cat.name) || (!categoria && cat.name === 'Todos')
+                      ? 'bg-violet-600 text-white border-violet-600 shadow-lg shadow-violet-100'
+                      : 'bg-white text-gray-400 border-gray-100 hover:border-violet-300 hover:text-violet-600'
+                  }`}
+                >
+                  {cat.icon}
+                  {cat.name}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
+      </div>
 
-        {/* Grid de productos */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-10 md:gap-x-8 md:gap-y-12 mt-12">
+      {/* CONTENIDO: Grid de Obras */}
+      <div className="max-w-7xl mx-auto px-4 py-6 md:py-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-8 md:gap-x-8 md:gap-y-12">
           {obras?.map((obra) => (
             <Link 
               href={`/tienda/${obra.id}`} 
               key={obra.id} 
-              className="group flex bg-gray-100 p-2 shadow shadow-gray-300 rounded-sm flex-col"
+              className="group flex bg-gray-50 p-2 shadow-sm border border-gray-100 rounded-lg flex-col transition-all hover:shadow-md"
             >
-              {/* Imagen con proporción real */}
-              <div className="relative overflow-hidden bg-gray-50 rounded-sm">
+              {/* Contenedor de Imagen */}
+              <div className="relative overflow-hidden bg-white rounded-md aspect-square flex items-center justify-center">
                 <img 
                   src={obra.imagen_url} 
                   alt={obra.titulo}
-                  className="w-full h-auto object-contain transition-transform duration-1000 group-hover:scale-105"
+                  className="max-w-full max-h-full object-contain transition-transform duration-700 group-hover:scale-110"
                 />
               </div>
               
               <div className="mt-4 space-y-2 flex-1 flex flex-col justify-between">
                 <div>
                   <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-1">
-                    <h3 className="text-sm md:text-lg font-medium text-black uppercase tracking-tight group-hover:text-violet-600 transition-colors">
+                    <h3 className="text-xs md:text-base font-bold text-gray-800 uppercase tracking-tight group-hover:text-violet-600 transition-colors line-clamp-1">
                       {obra.titulo}
                     </h3>
-                    <span className="text-emerald-500 text-sm md:text-base">${obra.precio}</span>
+                    <span className="text-emerald-600 font-black text-xs md:text-sm">
+                      ${obra.precio.toLocaleString()}
+                    </span>
                   </div>
-                  <p className="text-[10px] md:text-xs text-gray-400 uppercase tracking-widest leading-none">
+                  <p className="text-[10px] md:text-xs text-gray-400 uppercase tracking-widest font-medium">
                     {obra.categoria} — {obra.medidas}
                   </p>
                 </div>
 
-                {/* Acciones: Componentes separados */}
-                <div className="pt-2 md:pt-4 flex items-center justify-between mt-auto">
+                {/* Acciones */}
+                <div className="pt-2 flex items-center justify-between mt-auto border-t border-gray-100">
                    <BotonDetalles />
                    <BotonCompartir id={obra.id} titulo={obra.titulo} />
                 </div>
@@ -92,6 +104,13 @@ export default async function TiendaPage({
             </Link>
           ))}
         </div>
+
+        {/* Mensaje de no resultados */}
+        {obras?.length === 0 && (
+          <div className="text-center py-20 bg-gray-50 rounded-3xl">
+            <p className="text-gray-400 text-sm italic tracking-widest uppercase">No hay obras en esta sección</p>
+          </div>
+        )}
       </div>
     </main>
   )
