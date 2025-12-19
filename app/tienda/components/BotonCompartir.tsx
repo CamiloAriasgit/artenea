@@ -42,7 +42,7 @@ export default function BotonCompartir({ id, titulo }: { id: string, titulo: str
     <button 
       onClick={handleShare}
       className={`
-        p-2 rounded-lg transition-all duration-300 flex items-center justify-center
+        p-1 rounded transition-all duration-300 flex items-center justify-center
         ${copiado 
           ? 'bg-emerald-100 text-emerald-600 scale-110' 
           : 'bg-white text-gray-500 hover:text-violet-600 hover:bg-violet-50 border border-gray-100 shadow-sm active:scale-90'
@@ -50,7 +50,7 @@ export default function BotonCompartir({ id, titulo }: { id: string, titulo: str
       `}
       title={copiado ? "¡Enlace copiado!" : "Compartir obra"}
     >
-      {copiado ? <Check size={18} /> : <Share2 size={18} />}
+      {copiado ? <Check size={20} /> : <Share2 size={20} />}
     </button>
   )
 }
