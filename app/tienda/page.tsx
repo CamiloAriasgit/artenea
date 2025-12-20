@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
-import { ShoppingBag, LayoutGrid, Palette, Mountain, PenTool } from 'lucide-react'
+import { ShoppingBag, LayoutGrid, Palette, Mountain, PenTool, Scissors, Gem, Stamp } from 'lucide-react'
 import BotonCompartir from './components/BotonCompartir'
 import BotonDetalles from './components/BotonDetalles'
 
@@ -18,12 +18,15 @@ export default async function TiendaPage({
   }
   const { data: obras } = await query
 
-  const categorias = [
-    { name: 'Todos', icon: <LayoutGrid size={16} /> },
-    { name: 'Pintura', icon: <Palette size={16} /> },
-    { name: 'Escultura', icon: <Mountain size={16} /> },
-    { name: 'Dibujo', icon: <PenTool size={16} /> },
-  ]
+const categorias = [
+  { name: 'Todos', icon: <LayoutGrid size={16} /> },
+  { name: 'Pintura', icon: <Palette size={16} /> },
+  { name: 'Dibujo', icon: <PenTool size={16} /> },
+  { name: 'Escultura', icon: <Mountain size={16} /> },
+  { name: 'Crochet', icon: <Scissors size={16} /> }, 
+  { name: 'Bisutería', icon: <Gem size={16} /> },   
+  { name: 'Grabado', icon: <Stamp size={16} /> },
+]
 
   return (
     <main className="min-h-screen bg-white pb-20">
