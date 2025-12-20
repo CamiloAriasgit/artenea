@@ -50,7 +50,7 @@ export default async function TiendaPage({
                 </header>
 
                 {/* Filtros: Centrados en PC, Scroll en Móvil */}
-                <div className="w-full pb-4 px-4 overflow-hidden">
+                <div className="w-full pb-2 px-4 overflow-hidden">
                     <div className="max-w-7xl mx-auto">
                         <div className="flex overflow-x-auto md:justify-center gap-2 no-scrollbar scroll-smooth">
                             {categorias.map((cat) => (

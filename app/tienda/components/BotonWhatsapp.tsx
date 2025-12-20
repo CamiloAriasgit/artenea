@@ -20,7 +20,7 @@ export default function BotonWhatsapp({ texto, mensajePersonalizado }: BotonWhat
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="rounded-full px-2 py-1 font-light tracking-widest text-gray-500 text-[10px] md:text-xs uppercase bg-white shadow border border-gray-100 flex items-center justify-center gap-3 transition-all duration-300 group-hover:bg-violet-900"
+      className="rounded-full px-2 py-1 font-light tracking-widest text-gray-500 text-[10px] md:text-xs uppercase bg-white shadow-sm flex items-center justify-center gap-3 transition-all duration-300 group-hover:bg-violet-900"
     >
         {texto}
         <div className="bg-violet-300 rounded-full p-1.5 group-hover:bg-violet-500 transition-colors">
