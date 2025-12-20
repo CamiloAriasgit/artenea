@@ -1,8 +1,8 @@
 "use client"
-import { useState, useEffect } from 'react' // Añadimos useEffect
+import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
-import { Upload, ArrowLeft, X, Image as ImageIcon } from 'lucide-react' // Añadimos iconos
+import { Upload, ArrowLeft, X, Image as ImageIcon } from 'lucide-react'
 import Link from 'next/link'
 
 export default function NuevoProducto() {
@@ -10,6 +10,9 @@ export default function NuevoProducto() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   
+  // Referencia al input de archivo para poder limpiarlo manualmente
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
   // ESTADOS PARA LA PREVIEW
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [fileName, setFileName] = useState<string | null>(null)
@@ -19,8 +22,17 @@ export default function NuevoProducto() {
     const file = e.target.files?.[0]
     if (file) {
       setFileName(file.name)
-      const url = URL.createObjectURL(file) // Crea una URL temporal para la imagen
+      const url = URL.createObjectURL(file)
       setPreviewUrl(url)
+    }
+  }
+
+  // Limpiar la selección
+  const handleRemoveImage = () => {
+    setPreviewUrl(null)
+    setFileName(null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "" // Reset técnico del input
     }
   }
 
@@ -36,13 +48,20 @@ export default function NuevoProducto() {
     setLoading(true)
 
     const formData = new FormData(e.currentTarget)
-    const file = formData.get('imagen') as File
-    // ... (resto de tus variables se mantienen igual)
+    // Obtenemos el archivo directamente del input para mayor seguridad
+    const file = fileInputRef.current?.files?.[0]
+    
     const titulo = formData.get('titulo') as string
     const precio = formData.get('precio') as string
     const categoria = formData.get('categoria') as string
     const medidas = formData.get('medidas') as string
     const descripcion = formData.get('descripcion') as string
+
+    if (!file) {
+      alert("Por favor, selecciona una imagen.")
+      setLoading(false)
+      return
+    }
 
     try {
       const fileExt = file.name.split('.').pop()
@@ -97,20 +116,19 @@ export default function NuevoProducto() {
           </header>
           
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* ... (inputs de título, precio, etc. se mantienen igual) ... */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Título de la Obra</label>
-              <input name="titulo" type="text" required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black" placeholder="Ej: Atardecer en el mar" />
+              <input name="titulo" type="text" required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black focus:ring-2 focus:ring-violet-500" placeholder="Ej: Atardecer en el mar" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Precio ($)</label>
-                <input name="precio" type="number" step="0.01" required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black" placeholder='0.00' />
+                <input name="precio" type="number" step="0.01" required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black focus:ring-2 focus:ring-violet-500" placeholder='0.00' />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Categoría</label>
-                <select name="categoria" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black">
+                <select name="categoria" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black focus:ring-2 focus:ring-violet-500">
                   <option value="Pintura">Pintura</option>
                   <option value="Escultura">Escultura</option>
                   <option value="Dibujo">Dibujo</option>
@@ -120,67 +138,73 @@ export default function NuevoProducto() {
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Medidas</label>
-              <input name="medidas" type="text" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black" placeholder="Ej: 50x70 cm" />
+              <input name="medidas" type="text" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black focus:ring-2 focus:ring-violet-500" placeholder="Ej: 50x70 cm" />
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Descripción</label>
-              <textarea name="descripcion" rows={3} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black" placeholder="Cuéntanos mas sobre la obra..."></textarea>
+              <textarea name="descripcion" rows={3} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black focus:ring-2 focus:ring-violet-500" placeholder="Cuéntanos mas sobre la obra..."></textarea>
             </div>
 
-            {/* SELECTOR DE IMAGEN CON PREVIEW */}
+            {/* SECTOR DE IMAGEN CORREGIDO */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Imagen de la Obra</label>
               
-              {!previewUrl ? (
-                // Estado: Sin imagen seleccionada
-                <div className="group relative flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-gray-300 rounded-xl hover:border-violet-500 hover:bg-violet-50 transition-all cursor-pointer">
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <Upload className="w-8 h-8 text-gray-400 group-hover:text-violet-500 mb-2" />
-                    <p className="text-xs text-gray-500 group-hover:text-violet-600 font-medium">Toca para seleccionar imagen</p>
-                  </div>
-                  <input 
-                    name="imagen" 
-                    type="file" 
-                    accept="image/*" 
-                    required 
-                    onChange={handleFileChange}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
-                  />
-                </div>
-              ) : (
-                // Estado: Imagen seleccionada (VISTA PREVIA)
-                <div className="relative w-full rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
-                  <img 
-                    src={previewUrl} 
-                    alt="Preview" 
-                    className="w-full h-48 object-contain bg-black/5" 
-                  />
-                  <div className="p-3 flex items-center justify-between bg-white border-t border-gray-100">
-                    <div className="flex items-center gap-2">
-                      <ImageIcon size={16} className="text-violet-500" />
-                      <span className="text-xs text-gray-600 truncate max-w-[200px]">{fileName}</span>
+              <div className="relative">
+                {/* El input siempre está presente pero invisible, permitiendo que el archivo persista */}
+                <input 
+                  ref={fileInputRef}
+                  name="imagen" 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={handleFileChange}
+                  className={`absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer ${previewUrl ? 'hidden' : 'block'}`}
+                  required={!previewUrl}
+                />
+
+                {!previewUrl ? (
+                  <div className="group flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-gray-300 rounded-xl hover:border-violet-500 hover:bg-violet-50 transition-all">
+                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                      <Upload className="w-8 h-8 text-gray-400 group-hover:text-violet-500 mb-2" />
+                      <p className="text-xs text-gray-500 group-hover:text-violet-600 font-medium">Toca para seleccionar imagen</p>
                     </div>
-                    <button 
-                      type="button"
-                      onClick={() => { setPreviewUrl(null); setFileName(null); }}
-                      className="p-1.5 bg-red-50 text-red-500 rounded-full hover:bg-red-100 transition-colors"
-                    >
-                      <X size={16} />
-                    </button>
                   </div>
-                  {/* El input sigue estando aquí pero oculto para que el formulario lo envíe */}
-                  <input name="imagen" type="file" className="hidden" />
-                </div>
-              )}
+                ) : (
+                  <div className="relative w-full rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
+                    <img 
+                      src={previewUrl} 
+                      alt="Preview" 
+                      className="w-full h-48 object-contain bg-black/5" 
+                    />
+                    <div className="p-3 flex items-center justify-between bg-white border-t border-gray-100">
+                      <div className="flex items-center gap-2 text-black">
+                        <ImageIcon size={16} className="text-violet-500" />
+                        <span className="text-xs font-medium truncate max-w-[200px]">{fileName}</span>
+                      </div>
+                      <button 
+                        type="button"
+                        onClick={handleRemoveImage}
+                        className="p-1.5 bg-red-50 text-red-500 rounded-full hover:bg-red-100 transition-colors"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-violet-200 transition-all active:scale-[0.98] disabled:bg-gray-400 disabled:shadow-none mt-4"
+              className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-violet-200 transition-all active:scale-[0.98] disabled:bg-gray-400 mt-4 flex items-center justify-center gap-2"
             >
-              {loading ? "Publicando..." : "Publicar Obra"}
+              {loading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Publicando...
+                </>
+              ) : "Publicar Obra"}
             </button>
           </form>
         </div>
