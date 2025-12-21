@@ -23,7 +23,7 @@ export default function BotonWhatsapp({ texto, mensajePersonalizado }: BotonWhat
       className="rounded-full px-2 py-1 font-light tracking-widest text-gray-500 text-[10px] md:text-xs uppercase bg-white shadow-sm flex items-center justify-center gap-3 transition-all duration-300 group-hover:bg-violet-900"
     >
         {texto}
-        <div className="bg-violet-300 rounded-full p-1.5 group-hover:bg-violet-500 transition-colors">
+        <div className="bg-violet-50 shadow rounded-full p-1.5 hover:bg-violet-400 transition-colors">
           <MessageCircle size={14} className="text-violet-600" />
         </div>
     </a>
