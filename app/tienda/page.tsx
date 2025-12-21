@@ -36,7 +36,7 @@ export default async function TiendaPage({
             <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100">
 
                 {/* Header */}
-                <header className="py-3 px-3 flex items-center justify-between max-w-7xl mx-auto">
+                <header className="py-4 px-3 flex items-center justify-between max-w-7xl mx-auto">
                     <div className='flex items-center gap-2'>
                         <div className="bg-violet-100 p-2 rounded-full text-violet-600">
                             <ShoppingBag size={18} />
@@ -50,7 +50,7 @@ export default async function TiendaPage({
                 </header>
 
                 {/* Filtros: Centrados en PC, Scroll en Móvil */}
-                <div className="w-full pb-2 px-4 overflow-hidden">
+                <div className="w-full pb-4 px-4 overflow-hidden">
                     <div className="max-w-7xl mx-auto">
                         <div className="flex overflow-x-auto md:justify-center gap-2 no-scrollbar scroll-smooth">
                             {categorias.map((cat) => (
@@ -72,7 +72,7 @@ export default async function TiendaPage({
             </div>
 
             {/* CONTENIDO: Grid de Obras */}
-            <div className="max-w-7xl mx-auto px-4 py-6 md:py-10">
+            <div className="max-w-7xl mx-auto px-2 py-6 md:py-10">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-8 md:gap-x-8 md:gap-y-12">
                     {obras?.map((obra) => (
                         <Link
