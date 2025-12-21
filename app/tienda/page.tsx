@@ -36,7 +36,7 @@ export default async function TiendaPage({
             <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100">
 
                 {/* Header */}
-                <header className="py-3 px-6 flex items-center justify-between max-w-7xl mx-auto">
+                <header className="py-3 px-3 flex items-center justify-between max-w-7xl mx-auto">
                     <div className='flex items-center gap-2'>
                         <div className="bg-violet-100 p-2 rounded-full text-violet-600">
                             <ShoppingBag size={18} />

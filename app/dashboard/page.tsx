@@ -33,7 +33,7 @@ export default async function DashboardPage() {
   return (
     <div className="max-w-5xl mx-auto py-6 px-2">
       {/* Encabezado */}
-      <div className="flex justify-between items-center mb-6 px-2">
+      <div className="flex justify-between items-center mb-4 px-2">
         <h1 className="text-xl md:text-2xl font-bold text-gray-700">Gestionar Obras</h1>
         <Link 
           href="/dashboard/nuevo" 

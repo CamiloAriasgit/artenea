@@ -17,10 +17,10 @@ export default async function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="fixed top-0 w-full z-50 bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center shadow-sm">
+      <nav className="fixed top-0 w-full z-50 bg-white border-b border-gray-200 py-3 px-4 flex justify-between items-center shadow-sm">
         <div className="flex gap-8 items-center">
           <span className="font-bold text-xl text-gray-800 tracking-tight leading-none flex items-center">
-            Artenea <span className="text-xs font-light bg-gray-200 text-gray-400 px-1 py-0.5 rounded-full tracking-widest ml-1">Admin</span>
+            Artenea <span className="text-xs font-light bg-violet-200 text-violet-400 px-1 py-0.5 rounded-full tracking-widest ml-1">Admin</span>
           </span>
           
           {/* Navegación Desktop (se oculta en móvil) */}
@@ -52,7 +52,7 @@ export default async function DashboardLayout({
       </nav>
 
       {/* Padding top para compensar el nav fixed */}
-      <main className="pt-20">
+      <main className="pt-15">
         {children}
       </main>
     </div>

@@ -17,26 +17,26 @@ export default function MobileMenu({ email }: { email: string | undefined }) {
 
       {/* Overlay y Menú Desplegable */}
       {isOpen && (
-        <div className="absolute top-16 left-0 w-full bg-white border-b shadow-xl z-50 flex flex-col p-6 animate-in slide-in-from-top duration-300">
-          <nav className="flex flex-col gap-6">
+        <div className="absolute top-16 left-0 w-full bg-white border-b border-gray-200 shadow-xl z-50 flex flex-col py-6 px-3 animate-in slide-in-from-top duration-300">
+          <nav className="flex flex-col gap-2">
             <Link 
               href="/dashboard" 
               onClick={toggleMenu}
-              className="flex items-center gap-3 font-medium text-gray-700 hover:text-violet-600 transition-colors"
+              className="flex items-center gap-3 font-medium py-2 px-3 rounded hover:bg-violet-100 text-gray-700 hover:text-violet-600 transition-colors"
             >
               <List size={20} /> Lista de Obras
             </Link>
             <Link 
               href="/dashboard/nuevo" 
               onClick={toggleMenu}
-              className="flex items-center gap-3 font-medium text-gray-700 hover:text-violet-600 transition-colors"
+              className="flex items-center gap-3 font-medium py-2 px-3 rounded hover:bg-violet-100 text-gray-700 hover:text-violet-600 transition-colors"
             >
               <PlusCircle size={20} />Añadir Nueva
             </Link>
             <Link 
               href="/tienda" 
               target="_blank" 
-              className="flex items-center gap-3 font-medium text-gray-700 hover:text-violet-600 transition-colors"
+              className="flex items-center gap-3 font-medium py-2 px-3 rounded hover:bg-violet-100 text-gray-700 hover:text-violet-600 transition-colors"
             >
               <ExternalLink size={20} /> Ver Web
             </Link>
