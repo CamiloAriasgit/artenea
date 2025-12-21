@@ -14,7 +14,7 @@ export default function BotonEliminar({ id, imageUrl, onDelete }: Props) {
       <input type="hidden" name="imageUrl" value={imageUrl} />
       <button 
         type="submit"
-        className="p-2 text-red-500 bg-red-50 hover:bg-red-100 rounded-lg transition-colors"
+        className="p-2 text-red-500 bg-red-50 hover:bg-red-100 cursor-pointer rounded-lg transition-colors"
         onClick={(e) => {
           if (!confirm("¿Estás seguro de que quieres eliminar esta obra?")) {
             e.preventDefault();
