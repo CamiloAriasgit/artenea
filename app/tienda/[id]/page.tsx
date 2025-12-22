@@ -30,6 +30,9 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
     const esReparacion = estadoBajo.includes('reparación');
     const esSuspendido = estadoBajo.includes('suspendido');
 
+    // Nueva lógica: El botón de contacto aparece si está disponible O si está en reparación
+    const mostrarBotonContacto = obra.disponible || esReparacion;
+
     return (
         <main className="min-h-screen bg-[#fafafa] text-zinc-900">
             {/* Navegación sutil */}
@@ -96,7 +99,7 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                                     {esVendido ? <Ban size={14} /> : esReparacion ? <Clock size={14} /> : <AlertTriangle size={14} />}
                                     <span className="text-xs font-bold uppercase tracking-wider">
                                         {esVendido && "Obra no disponible para venta"}
-                                        {esReparacion && "En proceso de restauración"}
+                                        {esReparacion && "En proceso de restauración - puedes consultar"}
                                         {esSuspendido && "Catálogo - No disponible para venta"}
                                     </span>
                                 </div>
@@ -104,8 +107,8 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                         </div>
 
                         <div className='flex justify-between pt-6 gap-2'>
-                            {/* Solo mostramos el botón de compra/contacto directo si está disponible */}
-                            {obra.disponible && <BotonContacto tituloObra={obra.titulo} />}
+                            {/* Botón de contacto habilitado para "Disponible" y "Reparación" */}
+                            {mostrarBotonContacto && <BotonContacto tituloObra={obra.titulo} />}
                             <BotonCompartirDetails id={obra.id} titulo={obra.titulo} />
                         </div>
                     </section>
