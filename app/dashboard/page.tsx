@@ -144,7 +144,7 @@ export default async function DashboardPage({
       </div>
 
       {obras?.length === 0 && (
-        <div className="p-20 text-center text-gray-400 bg-white rounded-xl border border-dashed border-gray-200">
+        <div className="p-20 text-center text-gray-400">
           No se encontraron obras en la categoría <span className="font-bold">"{categoria || 'Todos'}"</span>.
         </div>
       )}
