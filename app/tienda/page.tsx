@@ -45,7 +45,7 @@ export default async function TiendaPage({
                     </div>
                     <BotonWhatsapp
                         texto="Personalizados"
-                        mensajePersonalizado="¡Hola! Vi tu tienda y me interesa una obra personalizada. ¿Podrías darme información?"
+                        mensajePersonalizado="¡Hola! Vi tu tienda y me interesa una obra personalizada."
                     />
                 </header>
 
