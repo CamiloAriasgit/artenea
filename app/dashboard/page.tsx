@@ -2,7 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
 import { revalidatePath } from 'next/cache'
 import BotonEliminar from './BotonEliminar'
-import { Search } from 'lucide-react' // Icono opcional
+import { Pencil } from 'lucide-react' // Importamos icono de editar
 
 export default async function DashboardPage({
   searchParams,
@@ -12,7 +12,6 @@ export default async function DashboardPage({
   const supabase = await createClient()
   const { categoria } = await searchParams
 
-  // Lógica de filtrado
   let query = supabase.from('productos').select('*').order('created_at', { ascending: false })
   
   if (categoria && categoria !== 'Todos') {
@@ -20,8 +19,6 @@ export default async function DashboardPage({
   }
   
   const { data: obras, error } = await query
-
-  // Lista de categorías para el filtro (Misma de tu tienda)
   const categoriasFiltro = ['Todos', 'Pintura', 'Escultura', 'Dibujo', 'Crochet', 'Bisutería', 'Grabado']
 
   async function eliminarObra(formData: FormData) {
@@ -46,7 +43,6 @@ export default async function DashboardPage({
   return (
     <div className="max-w-5xl mx-auto py-6 px-2">
       
-      {/* Encabezado */}
       <div className="flex justify-between items-center mb-4 px-2">
         <h1 className="text-xl md:text-2xl font-bold text-gray-700">Gestionar Obras</h1>
         <Link 
@@ -57,7 +53,6 @@ export default async function DashboardPage({
         </Link>
       </div>
 
-      {/* BARRA DE FILTRO */}
       <div className="mb-4 px-2 overflow-x-auto no-scrollbar">
         <div className="flex justify-center gap-2 min-w-max">
           {categoriasFiltro.map((cat) => {
@@ -79,7 +74,7 @@ export default async function DashboardPage({
         </div>
       </div>
 
-      {/* VISTA MÓVIL (Cards) */}
+      {/* VISTA MÓVIL */}
       <div className="grid grid-cols-1 gap-3 md:hidden">
         {obras?.map((obra) => (
           <div key={obra.id} className="bg-white p-3 rounded-xl border border-gray-200 flex items-center justify-between shadow-sm">
@@ -91,12 +86,20 @@ export default async function DashboardPage({
                 <span className="text-sm font-semibold text-green-600">${obra.precio}</span>
               </div>
             </div>
-            <BotonEliminar id={obra.id} imageUrl={obra.imagen_url} onDelete={eliminarObra} />
+            <div className="flex gap-2">
+              <Link 
+                href={`/dashboard/editar/${obra.id}`}
+                className="p-2 text-violet-600 bg-violet-50 hover:bg-violet-100 rounded-lg transition-colors"
+              >
+                <Pencil size={20} />
+              </Link>
+              <BotonEliminar id={obra.id} imageUrl={obra.imagen_url} onDelete={eliminarObra} />
+            </div>
           </div>
         ))}
       </div>
 
-      {/* VISTA DESKTOP (Tabla) */}
+      {/* VISTA DESKTOP */}
       <div className="hidden md:block bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden text-black">
         <table className="w-full text-left text-sm">
           <thead className="bg-gray-50 border-b border-gray-200">
@@ -117,13 +120,22 @@ export default async function DashboardPage({
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                    <span className="px-2 py-1 bg-gray-100 text-gray-500 rounded text-[10px] uppercase font-bold">
-                        {obra.categoria}
-                    </span>
+                  <span className="px-2 py-1 bg-gray-100 text-gray-500 rounded text-[10px] uppercase font-bold">
+                    {obra.categoria}
+                  </span>
                 </td>
                 <td className="px-6 py-4 font-semibold text-green-600">${obra.precio}</td>
-                <td className="px-6 py-4 text-right">
-                  <BotonEliminar id={obra.id} imageUrl={obra.imagen_url} onDelete={eliminarObra} />
+                <td className="px-6 py-4">
+                  <div className="flex justify-end gap-2">
+                    <Link 
+                      href={`/dashboard/editar/${obra.id}`}
+                      className="p-2 text-violet-600 bg-violet-50 hover:bg-violet-100 rounded-lg transition-colors"
+                      title="Editar obra"
+                    >
+                      <Pencil size={20} />
+                    </Link>
+                    <BotonEliminar id={obra.id} imageUrl={obra.imagen_url} onDelete={eliminarObra} />
+                  </div>
                 </td>
               </tr>
             ))}
@@ -131,10 +143,9 @@ export default async function DashboardPage({
         </table>
       </div>
 
-      {/* Mensaje vacío */}
       {obras?.length === 0 && (
         <div className="p-20 text-center text-gray-400 bg-white rounded-xl border border-dashed border-gray-200">
-          No se encontraron obras en la categoría <span className="font-bold">"{categoria || 'Todos'}"</span>.
+          No se encontraron obras.
         </div>
       )}
     </div>

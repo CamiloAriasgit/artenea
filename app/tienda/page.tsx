@@ -50,7 +50,7 @@ export default async function TiendaPage({
                 </header>
 
                 {/* Filtros: Centrados en PC, Scroll en Móvil */}
-                <div className="w-full pb-4 px-4 overflow-hidden">
+               <div className="w-full pb-4 px-4 overflow-hidden">
                     <div className="max-w-7xl mx-auto">
                         <div className="flex overflow-x-auto md:justify-center gap-2 no-scrollbar scroll-smooth">
                             {categorias.map((cat) => (
@@ -78,15 +78,30 @@ export default async function TiendaPage({
                         <Link
                             href={`/tienda/${obra.id}`}
                             key={obra.id}
-                            className="group flex bg-gray-50 p-2 shadow-sm border border-gray-100 rounded-lg flex-col transition-all hover:shadow-md"
+                            className={`group flex bg-gray-50 p-2 shadow-sm border border-gray-100 rounded-lg flex-col transition-all hover:shadow-md ${!obra.disponible ? 'opacity-90' : ''}`}
                         >
                             {/* Contenedor de Imagen */}
                             <div className="relative overflow-hidden bg-white rounded-md aspect-square flex items-center justify-center">
                                 <img
                                     src={obra.imagen_url}
                                     alt={obra.titulo}
-                                    className="max-w-full max-h-full object-contain transition-transform duration-700 group-hover:scale-110"
+                                    className={`max-w-full max-h-full object-contain transition-transform duration-700 group-hover:scale-110 ${!obra.disponible ? 'grayscale-[0.5]' : ''}`}
                                 />
+                                
+                                {/* ETIQUETA DE DISPONIBILIDAD */}
+                                {!obra.disponible && (
+                                    <div className="absolute inset-0 bg-black/5 flex items-start justify-end p-2">
+                                        <span className={`px-2 py-1 rounded text-[8px] md:text-[10px] font-bold uppercase tracking-tighter shadow-sm backdrop-blur-sm ${
+                                            obra.estado_detalle?.includes('vendido') 
+                                                ? 'bg-red-500/90 text-white' 
+                                                : obra.estado_detalle?.includes('reparación')
+                                                ? 'bg-amber-500/90 text-white'
+                                                : 'bg-zinc-500/90 text-white'
+                                        }`}>
+                                            {obra.estado_detalle || 'No disponible'}
+                                        </span>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="mt-4 space-y-2 flex-1 flex flex-col justify-between">
@@ -95,7 +110,7 @@ export default async function TiendaPage({
                                         <h3 className="text-xs md:text-base font-bold text-gray-800 uppercase tracking-tight group-hover:text-violet-600 transition-colors line-clamp-1">
                                             {obra.titulo}
                                         </h3>
-                                        <span className="text-emerald-600 font-black text-xs md:text-sm">
+                                        <span className={`font-black text-xs md:text-sm ${!obra.disponible ? 'text-gray-400 line-through decoration-1' : 'text-gray-500'}`}>
                                             ${obra.precio.toLocaleString()}
                                         </span>
                                     </div>
@@ -117,7 +132,7 @@ export default async function TiendaPage({
                 {/* Mensaje de no resultados */}
                 {obras?.length === 0 && (
                     <div className="text-center py-20 bg-gray-50 rounded-3xl">
-                        <p className="text-gray-400 text-sm italic tracking-widest uppercase">No hay obras en esta sección</p>
+                        <p className="text-gray-400 text-sm italic tracking-widest uppercase">No hay obras en la categoría <span className="font-bold">"{categoria || 'Todos'}"</span></p>
                     </div>
                 )}
             </div>
