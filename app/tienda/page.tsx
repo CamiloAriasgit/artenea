@@ -30,7 +30,7 @@ export default async function TiendaPage({
     ]
 
     return (
-        <main className="min-h-screen bg-white pb-20">
+        <main className="min-h-screen bg-gray-100 pb-20">
 
             {/* SECCIÓN FIJA: Header y Filtros */}
             <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100">
@@ -78,7 +78,7 @@ export default async function TiendaPage({
                         <Link
                             href={`/tienda/${obra.id}`}
                             key={obra.id}
-                            className={`group flex bg-gray-50 p-2 shadow-sm border border-gray-100 rounded-lg flex-col transition-all hover:shadow-md ${!obra.disponible ? 'opacity-90' : ''}`}
+                            className={`group flex bg-white p-2 shadow-sm border border-gray-100 rounded-lg flex-col transition-all hover:shadow-md ${!obra.disponible ? 'opacity-90' : ''}`}
                         >
                             {/* Contenedor de Imagen */}
                             <div className="relative overflow-hidden bg-white rounded-md aspect-square flex items-center justify-center">
