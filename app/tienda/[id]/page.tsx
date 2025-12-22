@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, MessageCircle, Ruler, Info, ShieldCheck } from 'lucide-react'
 import BotonContacto from '../components/BotonContacto'
-import BotonCompartir from '../components/BotonCompartir'
+import BotonCompartirDetails from '../components/BotonCompartirDetails'
 
 export default async function ObraDetalle({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
@@ -55,25 +55,20 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                 </div>
 
                 {/* COLUMNA DERECHA: Información Detallada */}
-                <div className="lg:col-span-5 flex flex-col space-y-10">
-                    <section className="space-y-4">
-
+                <div className="lg:col-span-5 flex flex-col space-y-5">
+                    <section className="space-y-0 flex flex-col justify-center">
+                        <span className="text-violet-600 uppercase tracking-widest text-[10px] font-bold">
+                            {obra.categoria}
+                        </span>
                         <h1 className="text-4xl md:text-5xl font-light tracking-tighter text-zinc-950 leading-tight uppercase">
                             {obra.titulo}
                         </h1>
-                        <div className='flex gap-4 items-center'>
-                            <p className="text-3xl font-extralight text-zinc-500">
-                                {formatter.format(obra.precio)}
-                            </p>
-                            <div className="inline-block px-3 py-1 border border-violet-100 bg-violet-50/50 rounded-full">
-                                <span className="text-violet-600 uppercase tracking-widest text-[10px] font-bold">
-                                    {obra.categoria}
-                                </span>
-                            </div>
-                        </div>
-                        <div className='flex justify-between gap-2'>
+                        <p className="text-2xl font-extralight text-zinc-500">
+                            {formatter.format(obra.precio)}
+                        </p>
+                        <div className='flex justify-between pt-4 gap-2'>
                             <BotonContacto tituloObra={obra.titulo} />
-                            <BotonCompartir id={obra.id} titulo={obra.titulo} />
+                            <BotonCompartirDetails id={obra.id} titulo={obra.titulo} />
                         </div>
 
                     </section>
@@ -112,6 +107,7 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
 
                     {/* Acción Principal */}
                     <div className="space-y-6 pt-4">
+                        <p className='text-gray-400 font-light'>¿Quieres una obra como esta, pero personalizada?</p>
                         <a
                             href={`https://wa.me/TUNUMERO?text=Hola! Me interesa la obra "${obra.titulo}"`}
                             target="_blank"

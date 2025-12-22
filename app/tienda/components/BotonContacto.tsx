@@ -17,12 +17,12 @@ export default function BotonContacto({
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}`
 
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div className={`w-full ${className}`}>
       <a 
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex items-center justify-center gap-3 w-full bg-violet-600 text-violet-50 px-4 py-2 rounded-sm hover:bg-violet-700 hover:text-violet-50 transition-all duration-500 uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold shadow-2xl shadow-zinc-200 overflow-hidden"
+        className="group relative flex items-center justify-center gap-3 h-full bg-violet-600 text-violet-50 px-8 rounded-sm hover:bg-violet-700 hover:text-violet-50 transition-all duration-500 uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold shadow-2xl shadow-zinc-200 overflow-hidden"
       >
         <MessageCircle size={18} className="z-10" />
         <span className="z-10">{texto}</span>
