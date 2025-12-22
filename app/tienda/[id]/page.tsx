@@ -24,12 +24,15 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
         minimumFractionDigits: 0,
     })
 
-    // Lógica para identificar el estado visual
-    const esVendido = obra.estado_detalle?.toLowerCase().includes('vendido')
-    const esReparacion = obra.estado_detalle?.toLowerCase().includes('reparación')
+    // Lógica de identificación de estados precisa
+    const estadoBajo = obra.estado_detalle?.toLowerCase() || '';
+    const esVendido = estadoBajo.includes('vendido');
+    const esReparacion = estadoBajo.includes('reparación');
+    const esSuspendido = estadoBajo.includes('suspendido');
 
     return (
         <main className="min-h-screen bg-[#fafafa] text-zinc-900">
+            {/* Navegación sutil */}
             <nav className="max-w-7xl mx-auto p-6 lg:px-12">
                 <Link
                     href="/tienda"
@@ -48,20 +51,23 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                         <img
                             src={obra.imagen_url}
                             alt={obra.titulo}
-                            className={`w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 ${!obra.disponible ? 'grayscale-[0.4]' : ''}`}
+                            className={`w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 ${!obra.disponible ? 'grayscale-[0.4] opacity-90' : ''}`}
                         />
                         
-                        {/* Etiqueta flotante si no está disponible */}
+                        {/* Etiqueta flotante según el estado */}
                         {!obra.disponible && (
                             <div className="absolute top-4 right-4 animate-in fade-in zoom-in duration-500">
                                 <span className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-xl flex items-center gap-2 text-white ${
-                                    esVendido ? 'bg-red-500' : 'bg-amber-500'
+                                    esVendido ? 'bg-red-500' : 
+                                    esReparacion ? 'bg-amber-500' : 
+                                    'bg-zinc-500'
                                 }`}>
-                                    {esVendido ? <Ban size={12} /> : <Clock size={12} />}
+                                    {esVendido ? <Ban size={12} /> : esReparacion ? <Clock size={12} /> : <AlertTriangle size={12} />}
                                     {obra.estado_detalle}
                                 </span>
                             </div>
                         )}
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                     </div>
                 </div>
 
@@ -75,26 +81,30 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                             {obra.titulo}
                         </h1>
 
-                        {/* Precio o Estado */}
+                        {/* Bloque de Precio / Estado Dinámico */}
                         <div className="mt-2">
                             {obra.disponible ? (
                                 <p className="text-xl font-light text-zinc-500">
                                     {formatter.format(obra.precio)}
                                 </p>
                             ) : (
-                                <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-md border ${
-                                    esVendido ? 'bg-zinc-100 border-zinc-200 text-zinc-500' : 'bg-amber-50 border-amber-100 text-amber-700'
+                                <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md border ${
+                                    esVendido ? 'bg-red-50 border-red-100 text-red-700' : 
+                                    esReparacion ? 'bg-amber-50 border-amber-100 text-amber-700' : 
+                                    'bg-zinc-100 border-zinc-200 text-zinc-600'
                                 }`}>
-                                    <AlertTriangle size={14} />
+                                    {esVendido ? <Ban size={14} /> : esReparacion ? <Clock size={14} /> : <AlertTriangle size={14} />}
                                     <span className="text-xs font-bold uppercase tracking-wider">
-                                        {esVendido ? "Obra no disponible para venta" : "En proceso de restauración"}
+                                        {esVendido && "Obra no disponible para venta"}
+                                        {esReparacion && "En proceso de restauración"}
+                                        {esSuspendido && "Catálogo - No disponible para venta"}
                                     </span>
                                 </div>
                             )}
                         </div>
 
-                        {/* Botones de acción principal (Solo se muestra contacto si está disponible) */}
                         <div className='flex justify-between pt-6 gap-2'>
+                            {/* Solo mostramos el botón de compra/contacto directo si está disponible */}
                             {obra.disponible && <BotonContacto tituloObra={obra.titulo} />}
                             <BotonCompartirDetails id={obra.id} titulo={obra.titulo} />
                         </div>
@@ -102,6 +112,7 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
 
                     {/* Bloques de Información Estructurada */}
                     <div className="grid gap-8 py-8 border-y border-zinc-100">
+                        {/* Medidas */}
                         <div className="flex gap-4">
                             <div className="mt-1 text-zinc-400"><Ruler size={18} strokeWidth={1.5} /></div>
                             <div>
@@ -110,6 +121,7 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                             </div>
                         </div>
 
+                        {/* Descripción */}
                         <div className="flex gap-4">
                             <div className="mt-1 text-zinc-400"><Info size={18} strokeWidth={1.5} /></div>
                             <div>
@@ -120,6 +132,7 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                             </div>
                         </div>
 
+                        {/* Garantía/Envío */}
                         <div className="flex gap-4">
                             <div className="mt-1 text-zinc-400"><ShieldCheck size={18} strokeWidth={1.5} /></div>
                             <div>
@@ -129,11 +142,11 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                         </div>
                     </div>
 
-                    {/* SECCIÓN DE REFERENCIA: Se vuelve la protagonista si no hay disponibilidad */}
-                    <div className={`transition-all duration-500 ${!obra.disponible ? 'scale-105 ring-1 ring-violet-100 rounded-xl p-4 bg-white shadow-sm' : ''}`}>
+                    {/* SECCIÓN DE REFERENCIA */}
+                    <div className={`max-w-7xl mx-auto w-full transition-all duration-500 ${!obra.disponible ? 'pt-4' : ''}`}>
                         {!obra.disponible && (
-                            <p className="text-[10px] text-violet-500 font-bold uppercase tracking-widest text-center mb-4 italic">
-                                — Inspiración para tu próximo pedido —
+                            <p className="text-[10px] text-violet-500 font-bold uppercase tracking-[0.2em] text-center mb-4 italic">
+                                — Inspiración para pedidos personalizados —
                             </p>
                         )}
                         <BotonReferencia tituloObra={obra.titulo} />
