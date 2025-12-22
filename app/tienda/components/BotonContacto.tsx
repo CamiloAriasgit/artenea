@@ -8,7 +8,7 @@ interface BotonContactoProps {
 
 export default function BotonContacto({ 
   tituloObra, 
-  texto = "Consultar Disponibilidad",
+  texto = "Pedir obra",
   className = "" 
 }: BotonContactoProps) {
   

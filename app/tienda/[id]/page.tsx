@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowLeft, MessageCircle, Ruler, Info, ShieldCheck } from 'lucide-react'
 import BotonContacto from '../components/BotonContacto'
 import BotonCompartirDetails from '../components/BotonCompartirDetails'
+import BotonReferencia from '../components/BotonReferencia'
 
 export default async function ObraDetalle({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
@@ -37,7 +38,7 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                 </Link>
             </nav>
 
-            <div className="max-w-7xl mx-auto px-6 lg:px-12 pb-24 grid lg:grid-cols-12 gap-12 items-start">
+            <div className="max-w-7xl mx-auto px-6 lg:px-12 pb-10 grid lg:grid-cols-12 gap-12 items-start">
 
                 {/* COLUMNA IZQUIERDA: Imagen 
             - lg:sticky y lg:top-12: Solo se queda fija en desktop.
@@ -60,10 +61,10 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                         <span className="text-violet-600 uppercase tracking-widest text-[10px] font-bold">
                             {obra.categoria}
                         </span>
-                        <h1 className="text-4xl md:text-5xl font-light tracking-tighter text-zinc-950 leading-tight uppercase">
+                        <h1 className="text-2xl md:text-5xl tracking-tighter text-zinc-950 leading-tight uppercase">
                             {obra.titulo}
                         </h1>
-                        <p className="text-2xl font-extralight text-zinc-500">
+                        <p className="text-xl font-light text-zinc-500">
                             {formatter.format(obra.precio)}
                         </p>
                         <div className='flex justify-between pt-4 gap-2'>
@@ -104,23 +105,8 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                             </div>
                         </div>
                     </div>
-
-                    {/* Acción Principal */}
-                    <div className="space-y-6 pt-4">
-                        <p className='text-gray-400 font-light'>¿Quieres una obra como esta, pero personalizada?</p>
-                        <a
-                            href={`https://wa.me/TUNUMERO?text=Hola! Me interesa la obra "${obra.titulo}"`}
-                            target="_blank"
-                            className="group relative flex items-center justify-center gap-3 w-full bg-zinc-950 text-white px-8 py-6 rounded-sm hover:bg-violet-700 transition-all duration-500 uppercase tracking-[0.2em] text-xs font-bold shadow-2xl shadow-zinc-200 overflow-hidden"
-                        >
-                            <MessageCircle size={18} className="z-10" />
-                            <span className="z-10">Consultar Disponibilidad</span>
-                            {/* Efecto Shimmer */}
-                            <div className="absolute inset-0 w-1/2 h-full bg-white/10 skew-x-[-20deg] -translate-x-full group-hover:translate-x-[250%] transition-transform duration-1000" />
-                        </a>
-                        <p className="text-center text-zinc-400 text-[10px] tracking-[0.2em] uppercase font-medium">
-                            Envío asegurado a todo el país
-                        </p>
+                    <div className="max-w-7xl mx-auto">
+                        <BotonReferencia tituloObra={obra.titulo} />
                     </div>
                 </div>
             </div>
