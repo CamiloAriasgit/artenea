@@ -5,6 +5,7 @@ import { ArrowLeft, Ruler, Info, ShieldCheck, Ban, Clock, AlertTriangle } from '
 import BotonContacto from '../components/BotonContacto'
 import BotonCompartirDetails from '../components/BotonCompartirDetails'
 import BotonReferencia from '../components/BotonReferencia'
+import CarruselDetalle from '../components/CarruselDetalle' // Importamos el nuevo componente
 
 export default async function ObraDetalle({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
@@ -30,8 +31,13 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
     const esReparacion = estadoBajo.includes('reparación');
     const esSuspendido = estadoBajo.includes('suspendido');
 
-    // Nueva lógica: El botón de contacto aparece si está disponible O si está en reparación
     const mostrarBotonContacto = obra.disponible || esReparacion;
+
+    // Preparamos el array de imágenes para el carrusel
+    // Si la columna 'imagenes' está vacía (obras viejas), usamos 'imagen_url' como fallback
+    const listaImagenes = (obra.imagenes && obra.imagenes.length > 0) 
+        ? obra.imagenes 
+        : [obra.imagen_url];
 
     return (
         <main className="min-h-screen bg-[#fafafa] text-zinc-900">
@@ -48,18 +54,20 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
 
             <div className="max-w-7xl mx-auto px-6 lg:px-12 pb-10 grid lg:grid-cols-12 gap-12 items-start">
 
-                {/* COLUMNA IZQUIERDA: Imagen */}
+                {/* COLUMNA IZQUIERDA: CARRUSEL DE IMÁGENES */}
                 <div className="lg:col-span-7 lg:sticky lg:top-12 self-start lg:mb-0">
                     <div className="relative group overflow-hidden rounded-sm bg-white shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
-                        <img
-                            src={obra.imagen_url}
-                            alt={obra.titulo}
-                            className={`w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 ${!obra.disponible ? 'grayscale-[0.4] opacity-90' : ''}`}
+                        
+                        {/* Sustituimos la imagen estática por el componente interactivo */}
+                        <CarruselDetalle 
+                            imagenes={listaImagenes} 
+                            titulo={obra.titulo} 
+                            disponible={obra.disponible} 
                         />
                         
                         {/* Etiqueta flotante según el estado */}
                         {!obra.disponible && (
-                            <div className="absolute top-4 right-4 animate-in fade-in zoom-in duration-500">
+                            <div className="absolute top-4 right-4 z-20 animate-in fade-in zoom-in duration-500">
                                 <span className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-xl flex items-center gap-2 text-white ${
                                     esVendido ? 'bg-red-500' : 
                                     esReparacion ? 'bg-amber-500' : 
@@ -70,7 +78,6 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                                 </span>
                             </div>
                         )}
-                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                     </div>
                 </div>
 
@@ -84,7 +91,6 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                             {obra.titulo}
                         </h1>
 
-                        {/* Bloque de Precio / Estado Dinámico */}
                         <div className="mt-2">
                             {obra.disponible ? (
                                 <p className="text-xl font-light text-zinc-500">
@@ -107,15 +113,12 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                         </div>
 
                         <div className='flex justify-between pt-6 gap-2'>
-                            {/* Botón de contacto habilitado para "Disponible" y "Reparación" */}
                             {mostrarBotonContacto && <BotonContacto tituloObra={obra.titulo} />}
                             <BotonCompartirDetails id={obra.id} titulo={obra.titulo} />
                         </div>
                     </section>
 
-                    {/* Bloques de Información Estructurada */}
                     <div className="grid gap-8 py-8 border-y border-zinc-100">
-                        {/* Medidas */}
                         <div className="flex gap-4">
                             <div className="mt-1 text-zinc-400"><Ruler size={18} strokeWidth={1.5} /></div>
                             <div>
@@ -124,7 +127,6 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                             </div>
                         </div>
 
-                        {/* Descripción */}
                         <div className="flex gap-4">
                             <div className="mt-1 text-zinc-400"><Info size={18} strokeWidth={1.5} /></div>
                             <div>
@@ -135,7 +137,6 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                             </div>
                         </div>
 
-                        {/* Garantía/Envío */}
                         <div className="flex gap-4">
                             <div className="mt-1 text-zinc-400"><ShieldCheck size={18} strokeWidth={1.5} /></div>
                             <div>
@@ -145,7 +146,6 @@ export default async function ObraDetalle({ params }: { params: Promise<{ id: st
                         </div>
                     </div>
 
-                    {/* SECCIÓN DE REFERENCIA */}
                     <div className={`max-w-7xl mx-auto w-full transition-all duration-500 ${!obra.disponible ? 'pt-4' : ''}`}>
                         {!obra.disponible && (
                             <p className="text-[10px] text-violet-500 font-bold uppercase tracking-[0.2em] text-center mb-4 italic">
