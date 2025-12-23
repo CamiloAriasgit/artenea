@@ -4,6 +4,7 @@ import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import { Upload, ArrowLeft, X, Image as ImageIcon } from 'lucide-react'
 import Link from 'next/link'
+import { toast } from 'sonner'
 
 interface PreviewImage {
     url: string;
@@ -16,10 +17,8 @@ export default function NuevoProducto() {
     const [loading, setLoading] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
 
-    // ESTADOS PARA MÚLTIPLES PREVIEWS
     const [previews, setPreviews] = useState<PreviewImage[]>([])
 
-    // Manejar múltiples archivos
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || [])
         if (files.length > 0) {
@@ -28,15 +27,15 @@ export default function NuevoProducto() {
                 file: file
             }))
             setPreviews(prev => [...prev, ...newPreviews])
+            toast.info(`Se han añadido ${files.length} imágenes.`);
         }
-        // Limpiamos el valor del input para que permita seleccionar los mismos archivos si se borran
         if (fileInputRef.current) fileInputRef.current.value = ""
     }
 
     const handleRemoveImage = (index: number) => {
         setPreviews(prev => {
             const updated = [...prev]
-            URL.revokeObjectURL(updated[index].url) // Limpiar memoria
+            URL.revokeObjectURL(updated[index].url)
             updated.splice(index, 1)
             return updated
         })
@@ -50,12 +49,15 @@ export default function NuevoProducto() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        
         if (previews.length === 0) {
-            alert("Por favor, selecciona al menos una imagen.")
+            toast.error("Faltan imágenes", {
+                description: "Por favor, selecciona al menos una imagen."
+            })
             return
         }
-        setLoading(true)
 
+        setLoading(true)
         const formData = new FormData(e.currentTarget)
         const titulo = formData.get('titulo') as string
         const precio = formData.get('precio') as string
@@ -63,8 +65,9 @@ export default function NuevoProducto() {
         const medidas = formData.get('medidas') as string
         const descripcion = formData.get('descripcion') as string
 
-        try {
-            // 1. Subir todas las imágenes en paralelo
+        // Definimos la función interna de guardado
+        const guardarObra = async () => {
+            // 1. Subir imágenes
             const uploadPromises = previews.map(async (p) => {
                 const fileExt = p.file.name.split('.').pop()
                 const fileNameStorage = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
@@ -84,26 +87,39 @@ export default function NuevoProducto() {
 
             const urlsSubidas = await Promise.all(uploadPromises)
 
-            // 2. Insertar en DB (Usamos la primera foto para 'imagen_url' y todas para 'imagenes')
+            // 2. Insertar en base de datos
             const { error: dbError } = await supabase.from('productos').insert({
                 titulo,
                 descripcion,
                 precio: parseFloat(precio),
                 categoria,
                 medidas,
-                imagen_url: urlsSubidas[0], // Portada (compatibilidad)
-                imagenes: urlsSubidas      // Array completo para el carrusel
+                imagen_url: urlsSubidas[0],
+                imagenes: urlsSubidas
             })
 
             if (dbError) throw dbError
+            return titulo
+        }
 
-            alert("¡Obra publicada con éxito!")
-            router.refresh()
-            router.push('/dashboard')
-
-        } catch (error: any) {
-            alert("Error: " + error.message)
-        } finally {
+        // Ejecución con Toast.promise (Sin usar .finally() para evitar errores de TS)
+        try {
+            await toast.promise(guardarObra(), {
+                loading: 'Subiendo obra y procesando imágenes...',
+                success: (data) => {
+                    // Esperamos un momento para que el usuario vea el éxito antes de redirigir
+                    setTimeout(() => {
+                        router.refresh()
+                        router.push('/dashboard')
+                    }, 1500)
+                    return `¡${data} publicada con éxito!`
+                },
+                error: (err) => {
+                    setLoading(false) // Desbloquear botón si falla
+                    return `Error al publicar: ${err.message}`
+                },
+            })
+        } catch (error) {
             setLoading(false)
         }
     }
@@ -118,23 +134,23 @@ export default function NuevoProducto() {
                 <div className="bg-white p-5 md:p-10 rounded-2xl shadow-sm border border-gray-100">
                     <header className="mb-8">
                         <h1 className="text-2xl font-bold text-gray-800">Subir Nueva Obra</h1>
-                        <p className="text-sm text-gray-500">Puedes seleccionar varias fotos (la primera será la portada).</p>
+                        <p className="text-sm text-gray-500">Completa los detalles de la nueva pieza.</p>
                     </header>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">Título de la Obra</label>
-                            <input name="titulo" type="text" required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500" placeholder="Ej: Atardecer en el mar" />
+                            <input name="titulo" type="text" required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500 transition-all" placeholder="Ej: Atardecer en el mar" />
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">Precio ($)</label>
-                                <input name="precio" type="number" step="1" required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500" placeholder='0' />
+                                <input name="precio" type="number" step="1" required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500 transition-all" placeholder='0' />
                             </div>
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">Categoría</label>
-                                <select name="categoria" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500">
+                                <select name="categoria" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500 transition-all">
                                     {['Pintura', 'Dibujo', 'Escultura', 'Crochet', 'Bisutería', 'Grabado'].map(cat => (
                                         <option key={cat} value={cat}>{cat}</option>
                                     ))}
@@ -144,24 +160,23 @@ export default function NuevoProducto() {
 
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">Medidas</label>
-                            <input name="medidas" type="text" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500" placeholder="Ej: 50x70 cm" />
+                            <input name="medidas" type="text" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500 transition-all" placeholder="Ej: 50x70 cm" />
                         </div>
 
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">Descripción</label>
-                            <textarea name="descripcion" rows={3} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500" placeholder="Cuéntanos mas sobre la obra..."></textarea>
+                            <textarea name="descripcion" rows={3} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500 transition-all" placeholder="Cuéntanos mas sobre la obra..."></textarea>
                         </div>
 
-                        {/* SECTOR DE IMÁGENES MÚLTIPLES */}
+                        {/* SECTOR DE IMÁGENES */}
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2 font-bold flex justify-between">
-                                Fotos de la Obra <span>({previews.length})</span>
+                                Fotos de la Obra <span className="text-violet-600">({previews.length})</span>
                             </label>
                             
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                                {/* Botón para añadir más */}
                                 <div className="relative group flex flex-col items-center justify-center h-32 border-2 border-dashed border-gray-300 rounded-xl hover:border-violet-500 hover:bg-violet-50 transition-all cursor-pointer">
-                                    <Upload className="w-6 h-6 text-gray-400 group-hover:text-violet-500" />
+                                    <Upload className="w-6 h-6 text-gray-400 group-hover:text-violet-500 transition-colors" />
                                     <span className="text-[10px] text-gray-500 mt-1">Añadir fotos</span>
                                     <input 
                                         ref={fileInputRef}
@@ -173,17 +188,16 @@ export default function NuevoProducto() {
                                     />
                                 </div>
 
-                                {/* Previews de las fotos seleccionadas */}
                                 {previews.map((preview, index) => (
-                                    <div key={index} className="relative h-32 group rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+                                    <div key={index} className="relative h-32 group rounded-xl overflow-hidden border border-gray-200 shadow-sm transition-all">
                                         <img src={preview.url} alt="Preview" className="w-full h-full object-cover" />
                                         {index === 0 && (
-                                            <span className="absolute top-1 left-1 bg-violet-600 text-white text-[8px] px-2 py-0.5 rounded-full font-bold uppercase tracking-tighter">Portada</span>
+                                            <span className="absolute top-1 left-1 bg-violet-600 text-white text-[8px] px-2 py-0.5 rounded-full font-bold uppercase z-10">Portada</span>
                                         )}
                                         <button
                                             type="button"
                                             onClick={() => handleRemoveImage(index)}
-                                            className="absolute top-1 right-1 p-1 bg-white/90 text-red-500 rounded-full shadow-md hover:bg-red-50 transition-colors opacity-0 group-hover:opacity-100"
+                                            className="absolute top-1 right-1 p-1 bg-white/90 text-red-500 rounded-full shadow-md hover:bg-red-50 transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                                         >
                                             <X size={14} />
                                         </button>
@@ -200,7 +214,7 @@ export default function NuevoProducto() {
                             {loading ? (
                                 <>
                                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                    Publicando {previews.length} fotos...
+                                    Publicando...
                                 </>
                             ) : "Publicar Obra"}
                         </button>

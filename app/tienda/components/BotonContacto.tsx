@@ -1,4 +1,6 @@
+'use client'
 import { MessageCircle } from 'lucide-react'
+import { toast } from 'sonner'
 
 interface BotonContactoProps {
   tituloObra: string
@@ -12,9 +14,16 @@ export default function BotonContacto({
   className = "" 
 }: BotonContactoProps) {
   
-  const WHATSAPP_NUMBER = "573003607632" // Configúralo aquí una sola vez
+  const WHATSAPP_NUMBER = "573003607632"
   const mensaje = encodeURIComponent(`Hola! Me interesa la obra "${tituloObra}"`)
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}`
+
+  const notificarRedireccion = () => {
+    toast.info("Abriendo WhatsApp", {
+      description: `Enviando consulta por "${tituloObra}"`,
+      icon: <MessageCircle size={16} className="text-green-500" />
+    })
+  }
 
   return (
     <div className={`w-full ${className}`}>
@@ -22,6 +31,7 @@ export default function BotonContacto({
         href={url}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={notificarRedireccion}
         className="group relative flex items-center justify-center gap-3 h-full bg-violet-600 text-violet-50 px-8 rounded-sm hover:bg-violet-700 hover:text-violet-50 transition-all duration-500 uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold shadow-2xl shadow-zinc-200 overflow-hidden"
       >
         <MessageCircle size={18} className="z-10" />
