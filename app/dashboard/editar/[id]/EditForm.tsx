@@ -2,15 +2,14 @@
 import { useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
-import { Save, ArrowLeft, CheckCircle2, AlertCircle } from 'lucide-react'
-import Link from 'next/link'
+import { Save, CheckCircle2, AlertCircle } from 'lucide-react'
+import { toast } from 'sonner' // Importamos toast
 
 export default function EditForm({ obra }: { obra: any }) {
   const supabase = createClient()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   
-  // Estados para disponibilidad
   const [disponible, setDisponible] = useState(obra.disponible)
   const [estadoDetalle, setEstadoDetalle] = useState(obra.estado_detalle || 'Disponible')
 
@@ -29,20 +28,34 @@ export default function EditForm({ obra }: { obra: any }) {
       estado_detalle: disponible ? 'Disponible' : estadoDetalle,
     }
 
-    try {
+    // Definimos la función de actualización para la promesa
+    const actualizarObra = async () => {
       const { error } = await supabase
         .from('productos')
         .update(updates)
         .eq('id', obra.id)
 
       if (error) throw error
+      return updates.titulo
+    }
 
-      alert("¡Obra actualizada!")
-      router.push('/dashboard')
-      router.refresh()
-    } catch (error: any) {
-      alert("Error: " + error.message)
-    } finally {
+    // Ejecutamos la promesa con Sonner
+    try {
+      await toast.promise(actualizarObra(), {
+        loading: 'Guardando cambios...',
+        success: (titulo) => {
+          setTimeout(() => {
+            router.push('/dashboard')
+            router.refresh()
+          }, 1000)
+          return `¡"${titulo}" actualizada con éxito!`
+        },
+        error: (err) => {
+          setLoading(false)
+          return `Error: ${err.message}`
+        },
+      })
+    } catch (error) {
       setLoading(false)
     }
   }
@@ -50,7 +63,7 @@ export default function EditForm({ obra }: { obra: any }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Sección de Disponibilidad */}
-      <div className={`p-4 rounded-xl border-2 transition-all ${disponible ? 'border-green-100 bg-green-50' : 'border-amber-100 bg-amber-50'}`}>
+      <div className={`p-4 rounded-xl border-2 transition-all duration-500 ${disponible ? 'border-green-100 bg-green-50' : 'border-amber-100 bg-amber-50'}`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {disponible ? <CheckCircle2 className="text-green-600" /> : <AlertCircle className="text-amber-600" />}
@@ -60,7 +73,6 @@ export default function EditForm({ obra }: { obra: any }) {
             </div>
           </div>
           
-          {/* Interruptor (Toggle) */}
           <button
             type="button"
             onClick={() => setDisponible(!disponible)}
@@ -70,14 +82,13 @@ export default function EditForm({ obra }: { obra: any }) {
           </button>
         </div>
 
-        {/* Selector de Motivo (Solo si no está disponible) */}
         {!disponible && (
           <div className="mt-4 pt-4 border-t border-amber-200 animate-in fade-in slide-in-from-top-2">
             <label className="block text-sm font-semibold text-amber-800 mb-2">Motivo de no disponibilidad:</label>
             <select 
               value={estadoDetalle}
               onChange={(e) => setEstadoDetalle(e.target.value)}
-              className="w-full p-2 bg-white border border-amber-300 rounded-lg text-sm text-amber-900 outline-none"
+              className="w-full p-2 bg-white border border-amber-300 rounded-lg text-sm text-amber-900 outline-none focus:ring-2 focus:ring-amber-500 transition-all"
             >
               <option value="Artículo vendido">Artículo vendido</option>
               <option value="Bajo reparación">Bajo reparación (se puede solicitar)</option>
@@ -87,42 +98,46 @@ export default function EditForm({ obra }: { obra: any }) {
         )}
       </div>
 
-      {/* Resto de campos (Igual al de Nuevo pero con defaultValue) */}
+      {/* Resto de campos */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="md:col-span-2">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Título</label>
-          <input name="titulo" defaultValue={obra.titulo} required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black" />
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Título de la Obra</label>
+          <input name="titulo" defaultValue={obra.titulo} required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500 text-black transition-all" />
         </div>
         
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">Precio ($)</label>
-          <input name="precio" type="number" step="0.01" defaultValue={obra.precio} required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black" />
+          <input name="precio" type="number" step="1" defaultValue={obra.precio} required className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500 text-black transition-all" />
         </div>
 
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">Categoría</label>
-          <select name="categoria" defaultValue={obra.categoria} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black">
-            <option value="Pintura">Pintura</option>
-            <option value="Dibujo">Dibujo</option>
-            <option value="Escultura">Escultura</option>
-            <option value="Crochet">Crochet</option>
-            <option value="Bisutería">Bisutería</option>
-            <option value="Grabado">Grabado</option>
+          <select name="categoria" defaultValue={obra.categoria} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500 text-black transition-all">
+            {['Pintura', 'Dibujo', 'Escultura', 'Crochet', 'Bisutería', 'Grabado'].map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
           </select>
         </div>
       </div>
 
       <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">Medidas</label>
+        <input name="medidas" defaultValue={obra.medidas} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500 text-black transition-all" placeholder="Ej: 50x70 cm" />
+      </div>
+
+      <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">Descripción</label>
-        <textarea name="descripcion" defaultValue={obra.descripcion} rows={4} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-black"></textarea>
+        <textarea name="descripcion" defaultValue={obra.descripcion} rows={4} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-500 text-black transition-all"></textarea>
       </div>
 
       <button 
         type="submit" 
         disabled={loading}
-        className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
+        className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all active:scale-[0.98] disabled:bg-gray-400 flex items-center justify-center gap-2"
       >
-        <Save size={20} />
+        {loading ? (
+          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+        ) : <Save size={20} />}
         {loading ? "Guardando..." : "Guardar Cambios"}
       </button>
     </form>
