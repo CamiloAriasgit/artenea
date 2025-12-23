@@ -110,7 +110,7 @@ export default async function DashboardPage({
               <div className="flex gap-2">
                 <Link 
                   href={`/dashboard/editar/${obra.id}`}
-                  className="p-2 text-violet-600 bg-violet-50 hover:bg-violet-100 rounded-lg transition-colors"
+                  className="p-2 text-violet-600 bg-violet-50 shadow-sm hover:bg-violet-100 rounded-lg transition-colors"
                 >
                   <Pencil size={20} />
                 </Link>
@@ -171,7 +171,7 @@ export default async function DashboardPage({
                     <div className="flex justify-end gap-2">
                       <Link 
                         href={`/dashboard/editar/${obra.id}`}
-                        className="p-2 text-violet-600 bg-violet-50 hover:bg-violet-100 rounded-lg transition-colors"
+                        className="p-2 text-violet-600 bg-violet-50 shadow-sm hover:bg-violet-100 rounded-lg transition-colors"
                         title="Editar obra"
                       >
                         <Pencil size={20} />
