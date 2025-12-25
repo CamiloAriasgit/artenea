@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import HeroSection from './components/HeroSection';
+import HeroS from './components/HeroS';
 
 const text = "Scroll";
 
@@ -7,6 +8,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       {/* Sección Hero */}
+      <HeroS />
       <HeroSection />
 
       {/* Sección Breve Sobre Ella */}
