@@ -9,7 +9,6 @@ const Header = () => {
 
     const navLinks = [
         { name: 'Inicio', href: '/' },
-        { name: 'Tienda', href: '/tienda' },
         { name: 'Categorías', href: '#categorias' },
         { name: 'Contacto', href: '#contacto' },
     ];
@@ -21,8 +20,8 @@ const Header = () => {
                 <div className="max-w-7xl mx-auto px-6 h-15 flex items-center justify-between">
                     
                     {/* LOGO */}
-                    <Link href="/" className="text-2xl font-light tracking-tighter uppercase italic text-neutral-800">
-                        insert
+                    <Link href="/" className="text-xl font-bold tracking-tighter uppercase italic text-neutral-400">
+                        ARTENEAZ
                     </Link>
 
                     {/* DESKTOP NAV */}
@@ -36,19 +35,19 @@ const Header = () => {
                                 {link.name}
                             </Link>
                         ))}
-                        <Link href="/carrito" className="text-neutral-800 hover:text-violet-500 transition-colors">
+                        <Link href="/tienda" className="text-neutral-500 hover:text-violet-500 transition-colors">
                             <ShoppingBag size={20} />
                         </Link>
                     </nav>
 
                     {/* BOTÓN MÓVIL */}
                     <div className="flex items-center gap-4 md:hidden">
-                        <Link href="/carrito" className="text-neutral-800">
+                        <Link href="/tienda" className="text-neutral-500">
                             <ShoppingBag size={20} />
                         </Link>
                         <button 
                             onClick={() => setIsOpen(!isOpen)}
-                            className="text-neutral-800 focus:outline-none"
+                            className="text-neutral-500 focus:outline-none"
                         >
                             {isOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
@@ -57,7 +56,7 @@ const Header = () => {
 
                 {/* MENÚ MÓVIL DESPLEGABLE */}
                 <div className={`
-                    absolute top-20 left-0 w-full bg-white border-b border-neutral-100 transition-all duration-300 ease-in-out md:hidden
+                    absolute top-15 left-0 w-full bg-white border-b border-neutral-100 transition-all duration-300 ease-in-out md:hidden
                     ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}
                 `}>
                     <nav className="flex flex-col p-6 gap-6">
