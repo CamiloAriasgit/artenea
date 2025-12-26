@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import HeroSection from './components/HeroSection';
 import HeroS from './components/HeroS';
+import CategorySection from './components/CategorySection';
+import Header from './components/Header';
 
 const text = "Scroll";
 
@@ -8,8 +10,9 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       {/* Sección Hero */}
+      <Header />
       <HeroS />
-      <HeroSection />
+      <CategorySection />
 
       {/* Sección Breve Sobre Ella */}
       <section className="py-24 px-6 bg-gray-50">

@@ -8,7 +8,7 @@ const HeroS = () => {
     const scrollText = "Scroll";
 
     return (
-        <section className="relative min-h-screen flex flex-col items-center text-center pt-14 md:pt-20 px-4 md:px-6 overflow-hidden bg-white">
+        <section className="relative min-h-screen flex flex-col items-center text-center pt-10 px-5 md:px-6 overflow-hidden bg-white">
             <Image
                 src="/images/Face.png" // La ruta empieza con / y apunta a public
                 alt="Descripción de la imagen"
@@ -19,7 +19,7 @@ const HeroS = () => {
             <h1 className='text-6xl sm:text-8xl font-bold tracking-tighter uppercase italic text-neutral-300'>
                 ARTENEAZ
             </h1>
-            <p className='font-light text-neutral-500'>
+            <p className='font-light text-neutral-400'>
                 Una colección de trazos, formas y emociones capturadas en el tiempo.
                 <span className="hidden sm:inline"> Explorando el límite entre lo tangible y lo imaginario.</span>
             </p>

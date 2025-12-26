@@ -110,7 +110,7 @@ export default async function TiendaPage({
                                         <h3 className="text-xs md:text-base font-bold text-gray-800 uppercase tracking-tight group-hover:text-violet-600 transition-colors line-clamp-1">
                                             {obra.titulo}
                                         </h3>
-                                        <span className={`font-black text-xs md:text-sm ${!obra.disponible ? 'text-gray-400 line-through decoration-1' : 'text-gray-500'}`}>
+                                        <span className={`font-bold text-xs md:text-sm ${!obra.disponible ? 'text-gray-400 line-through decoration-1' : 'text-gray-500'}`}>
                                             ${obra.precio.toLocaleString()}
                                         </span>
                                     </div>
