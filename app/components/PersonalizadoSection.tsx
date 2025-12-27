@@ -9,7 +9,6 @@ const PersonalizadoSection = () => {
             
             <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 
-                {/* LADO IZQUIERDO: Título y Call to Action (4 columnas) */}
                 <div className="lg:col-span-5 text-left space-y-8 z-10">
                     <h1 className='text-4xl sm:text-6xl lg:text-7xl tracking-tighter text-neutral-800 font-extralight leading-[0.9]'>
                         Convirtamos <br />
@@ -38,44 +37,45 @@ const PersonalizadoSection = () => {
                     {/* Imagen Principal (Sandia) - Central y grande */}
                     <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] aspect-square overflow-hidden rounded-3xl shadow-2xl z-20 group'>
                         <Image 
-                            src="/images/Sandia.jpg" 
+                            src="/images/SeñorAzul.jpg" 
                             alt="Esculturas"
                             fill
                             className="object-cover transition-transform duration-1000 group-hover:scale-110"
                             priority
                         />
                         <div className='absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent flex items-end p-8'>
-                            <span className='text-white uppercase text-xs tracking-widest'>Esculturas</span>
+                            <span className='text-white uppercase text-xs tracking-widest'>Pintura</span>
                         </div>
                     </div>
 
                     {/* Imagen 2 (Face) - Flotando arriba a la izquierda */}
                     <div className='absolute top-0 left-0 w-[45%] aspect-square overflow-hidden rounded-2xl shadow-xl z-10 group'>
                         <Image 
-                            src="/images/Face.png" 
+                            src="/images/Collar.jpg" 
                             alt="Abstracto"
                             fill
                             className="object-cover transition-transform duration-1000 group-hover:scale-110"
                         />
                         <div className='absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent flex items-end p-4'>
-                            <span className='text-white uppercase text-[10px] tracking-widest'>Abstracto</span>
+                            <span className='text-white uppercase text-[10px] tracking-widest'>BISUTERIA</span>
                         </div>
                     </div>
 
                     {/* Imagen 3 (Crochet) - Flotando abajo a la derecha */}
                     <div className='absolute bottom-0 right-0 w-[45%] aspect-square overflow-hidden rounded-2xl shadow-xl z-30 group'>
                         <Image 
-                            src="/images/Crochet.webp" 
+                            src="/images/Oso.png" 
                             alt="Crochet"
                             fill
                             className="object-cover transition-transform duration-1000 group-hover:scale-110"
                         />
                         <div className='absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent flex items-end p-4'>
-                            <span className='text-white uppercase text-[10px] tracking-widest'>Crochet</span>
+                            <span className='text-white uppercase text-[10px] tracking-widest'>CROCHET</span>
                         </div>
                     </div>
 
                 </div>
+                
             </div>
 
             {/* Elemento Decorativo de fondo */}
