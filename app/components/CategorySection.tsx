@@ -41,7 +41,7 @@ const CategorySection = () => {
                                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                                 priority
                             />
-                            <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6'>
+                            <div className='absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent flex items-end p-6'>
                                 <span className='text-white uppercase text-sm tracking-[0.2em] font-medium'>
                                     Esculturas
                                 </span>

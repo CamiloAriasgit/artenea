@@ -36,7 +36,7 @@ const HeroS = () => {
             {/* Bloque de Texto y Botones: Suben suavemente */}
             <div className='relative z-20 flex flex-col items-center pt-10 pb-25 sm:pb-15 max-w-lg mt-[-20px]'>
                 <FadeIn direction="up" delay={0.6}>
-                    <p className='text-sm md:text-base font-light text-neutral-500 text-center leading-relaxed tracking-wide'>
+                    <p className='text-neutral-500 max-w-sm font-light leading-relaxed text-center'>
                         Una colección de trazos, formas y emociones capturadas en el tiempo.
                     </p>
                 </FadeIn>
