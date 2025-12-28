@@ -20,7 +20,7 @@ const Header = () => {
                 <div className="max-w-7xl mx-auto px-6 h-15 flex items-center justify-between">
                     
                     {/* LOGO */}
-                    <Link href="/" className="text-xl font-bold tracking-tighter uppercase italic text-violet-400">
+                    <Link href="/" className="text-xl font-bold tracking-tighter uppercase italic text-neutral-300">
                         ARTENEAZ
                     </Link>
 
