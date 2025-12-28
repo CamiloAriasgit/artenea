@@ -8,9 +8,9 @@ import { FadeIn } from './FadeIn';
 const HeroS = () => {
     return (
         <section className="relative h-screen min-h-[700px] flex flex-col items-center pt-10 sm:pt-1 px-5 overflow-hidden bg-gradient-to-b from-white via-neutral-50 to-white">
-            
+
             <div className="relative w-full max-w-4xl flex flex-col items-center justify-center">
-                
+
                 {/* Título de fondo: Aparece con un delay sutil y sin movimiento exagerado */}
                 <FadeIn direction="up" delay={0.2}>
                     <h1 className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[18vw] md:text-[15vw] font-bold tracking-tighter uppercase italic text-neutral-200/80 leading-none select-none z-0'>
@@ -31,9 +31,8 @@ const HeroS = () => {
                     </div>
                 </FadeIn>
             </div>
-
             {/* Bloque de Texto y Botones: Suben suavemente */}
-            <div className='relative z-20 flex flex-col items-center pt-10 max-w-lg mt-[-20px]'>
+            <div className='relative z-20 flex flex-col items-center pt-10 pb-20 sm:pb-10 max-w-lg mt-[-20px]'>
                 <FadeIn direction="up" delay={0.6}>
                     <p className='text-sm md:text-base font-light text-neutral-500 text-center leading-relaxed tracking-wide'>
                         Una colección de trazos, formas y emociones capturadas en el tiempo.
@@ -48,7 +47,7 @@ const HeroS = () => {
                         >
                             <Store className="w-4 h-4" /> Visitar Tienda
                         </Link>
-                        
+
                         <div className="w-full sm:w-auto">
                             <BotonHero texto='CONTACTAR' />
                         </div>
@@ -57,7 +56,7 @@ const HeroS = () => {
             </div>
 
             {/* Indicador de Scroll: Aparece al final de todo */}
-            <FadeIn direction="up" delay={1.2} className="absolute bottom-28 sm:bottom-8">
+            <FadeIn direction="up" delay={1.2} className="absolute bottom-28 sm:bottom-28">
                 <div className="flex flex-col items-center gap-2 animate-bounce">
                     <span className="text-[10px] uppercase tracking-[0.4em] text-neutral-300">Scroll</span>
                     <ChevronDown size={14} className="text-neutral-300" />
