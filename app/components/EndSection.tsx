@@ -78,7 +78,7 @@ export default function CoolSection() {
               {/* Elemento Decorativo (Círculo) */}
               <div className="col-span-3 flex items-center justify-center">
                 <FadeIn direction="left" delay={0.9}>
-                  <div className="h-32 w-32 rounded-full bg-violet-100 p-4 text-violet-600 md:h-40 md:w-40 animate-pulse-slow">
+                  <div className="h-27 w-27 rounded-full bg-violet-100 p-4 text-violet-600 md:h-40 md:w-40 animate-pulse-slow">
                     <div className="flex h-full w-full items-center justify-center rounded-full border-2 border-dashed border-violet-400 text-center text-[10px] font-bold uppercase tracking-tighter">
                         Arteneaz
                     </div>
