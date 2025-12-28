@@ -65,7 +65,7 @@ const Header = () => {
                                 key={link.name} 
                                 href={link.href}
                                 onClick={() => setIsOpen(false)}
-                                className="text-sm uppercase tracking-[0.3em] text-neutral-600 font-light"
+                                className="text-sm uppercase tracking-wider text-neutral-500 hover:text-violet-500 transition-colors"
                             >
                                 {link.name}
                             </Link>
