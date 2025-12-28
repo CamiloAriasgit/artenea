@@ -104,7 +104,7 @@ export default async function DashboardPage({
                       </span>
                     )}
                   </div>
-                  <span className="text-sm font-semibold text-gray-500">${obra.precio}</span>
+                  <span className="text-sm font-semibold text-gray-500">${obra.precio.toLocaleString('es-CO')}</span>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -166,7 +166,7 @@ export default async function DashboardPage({
                       {obra.categoria}
                     </span>
                   </td>
-                  <td className="px-6 py-4 font-semibold text-gray-500">${obra.precio}</td>
+                  <td className="px-6 py-4 font-semibold text-gray-500">${obra.precio.toLocaleString('es-CO')}</td>
                   <td className="px-6 py-4">
                     <div className="flex justify-end gap-2">
                       <Link 
