@@ -5,7 +5,7 @@ import { Palette } from 'lucide-react';
 
 const PersonalizadoSection = () => {
     return (
-        <section className="relative min-h-screen flex items-center justify-center py-20 px-4 md:px-10 overflow-hidden bg-white">
+        <section id='Personalizado' className="relative min-h-screen flex items-center justify-center py-20 px-4 md:px-10 overflow-hidden bg-white">
             
             <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 
@@ -44,7 +44,7 @@ const PersonalizadoSection = () => {
                             priority
                         />
                         <div className='absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent flex items-end p-8'>
-                            <span className='text-white uppercase text-xs tracking-widest'>Pintura</span>
+                            <span className='text-white uppercase text-xs tracking-widest'>DIBUJO</span>
                         </div>
                     </div>
 

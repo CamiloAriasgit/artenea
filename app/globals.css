@@ -19,6 +19,7 @@ body {
 }
 
 @layer utilities {
+
   /* Oculta el scrollbar en Chrome, Safari y Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -26,7 +27,13 @@ body {
 
   /* Oculta el scrollbar en IE, Edge y Firefox */
   .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 }

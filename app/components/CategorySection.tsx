@@ -5,7 +5,7 @@ import { Store } from 'lucide-react';
 
 const CategorySection = () => {
     return (
-        <section className="relative min-h-screen flex flex-col items-center text-center px-4 md:px-6 overflow-hidden bg-white">
+        <section id='Categoria' className="relative min-h-screen flex flex-col items-center text-center px-4 md:px-6 overflow-hidden bg-white">
             {/* Encabezado */}
             <h1 className='text-3xl sm:text-5xl tracking-tighter text-neutral-800 font-extralight'>
                 Explora Diversas <span className='italic font-light text-neutral-400'>Categorías</span>

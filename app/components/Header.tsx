@@ -8,8 +8,8 @@ const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const navLinks = [
-        { name: 'Inicio', href: '/' },
-        { name: 'Categorías', href: '#categorias' },
+        { name: 'Categorías', href: '#Categoria' },
+        { name: 'Personalizado', href: '#Personalizado' },
         { name: 'Contacto', href: '#contacto' },
     ];
 
