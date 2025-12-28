@@ -7,7 +7,7 @@ import { FadeIn } from './FadeIn';
 
 const HeroS = () => {
     return (
-        <section className="relative h-screen min-h-[700px] flex flex-col items-center pt-10 sm:pt-1 px-5 overflow-hidden bg-gradient-to-b from-white via-neutral-50 to-white">
+        <section className="relative flex flex-col items-center pt-10 sm:pt-1 px-5 overflow-hidden bg-gradient-to-b from-white via-neutral-50 to-white">
 
             <div className="relative w-full max-w-4xl flex flex-col items-center justify-center">
 
@@ -32,7 +32,7 @@ const HeroS = () => {
                 </FadeIn>
             </div>
             {/* Bloque de Texto y Botones: Suben suavemente */}
-            <div className='relative z-20 flex flex-col items-center pt-10 pb-20 sm:pb-10 max-w-lg mt-[-20px]'>
+            <div className='relative z-20 flex flex-col items-center pt-10 pb-15 sm:pb-10 max-w-lg mt-[-20px]'>
                 <FadeIn direction="up" delay={0.6}>
                     <p className='text-sm md:text-base font-light text-neutral-500 text-center leading-relaxed tracking-wide'>
                         Una colección de trazos, formas y emociones capturadas en el tiempo.
