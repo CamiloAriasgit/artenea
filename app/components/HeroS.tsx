@@ -34,7 +34,7 @@ const HeroS = () => {
                 </FadeIn>
             </div>
             {/* Bloque de Texto y Botones: Suben suavemente */}
-            <div className='relative z-20 flex flex-col items-center pt-10 pb-15 sm:pb-10 max-w-lg mt-[-20px]'>
+            <div className='relative z-20 flex flex-col items-center pt-10 pb-25 sm:pb-15 max-w-lg mt-[-20px]'>
                 <FadeIn direction="up" delay={0.6}>
                     <p className='text-sm md:text-base font-light text-neutral-500 text-center leading-relaxed tracking-wide'>
                         Una colección de trazos, formas y emociones capturadas en el tiempo.
@@ -58,7 +58,7 @@ const HeroS = () => {
             </div>
 
             {/* Indicador de Scroll: Aparece al final de todo */}
-            <FadeIn direction="up" delay={1.2} className="absolute bottom-28 sm:bottom-28">
+            <FadeIn direction="up" delay={1.2} className="absolute bottom-0 sm:bottom-2">
                 <div className="flex flex-col items-center gap-2 animate-bounce">
                     <span className="text-[10px] uppercase tracking-[0.4em] text-neutral-300">Scroll</span>
                     <ChevronDown size={14} className="text-neutral-300" />
