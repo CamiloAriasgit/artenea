@@ -14,7 +14,7 @@ const HeroS = () => {
             <div className="relative w-full max-w-4xl flex flex-col items-center justify-center">
 
                 {/* Título de fondo: Aparece con un delay sutil y sin movimiento exagerado */}
-                <FadeIn direction="up" delay={0.2}>
+                <FadeIn delay={0.2}>
                     <h1 className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[18vw] md:text-[15vw] font-bold tracking-tighter uppercase italic text-neutral-200/80 leading-none select-none z-0'>
                         ARTENEAZ
                     </h1>
