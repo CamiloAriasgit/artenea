@@ -101,7 +101,7 @@ const PersonalizadoSection = () => {
 
             {/* Elemento Decorativo de fondo con entrada suave */}
             <FadeIn direction="left" delay={0.8} className="absolute top-1/2 right-0 -translate-y-1/2 w-1/3 h-2/3 -z-10">
-                <div className="w-full h-full bg-neutral-50 rounded-l-full" />
+                <div className="w-full h-full bg-violet-500 rounded-l-full" />
             </FadeIn>
         </section>
     );
