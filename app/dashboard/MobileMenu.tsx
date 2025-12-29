@@ -34,7 +34,7 @@ export default function MobileMenu({ email }: { email: string | undefined }) {
               <PlusCircle size={20} />Añadir Nueva
             </Link>
             <Link 
-              href="/tienda" 
+              href="/" 
               target="_blank" 
               className="flex items-center gap-3 font-medium py-2 px-3 rounded hover:bg-violet-100 text-gray-700 hover:text-violet-600 transition-colors"
             >

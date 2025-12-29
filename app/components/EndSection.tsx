@@ -29,7 +29,7 @@ export default function CoolSection() {
 
             <FadeIn direction="right" delay={0.4}>
               <p className="text-neutral-500 max-w-sm font-light leading-relaxed mt-6 mb-6">
-                Creamos experiencias digitales que no solo se ven bien, sino que se sienten naturales. Simplicidad radical en cada píxel.
+                Descubre piezas exclusivas que combinan técnica clásica y arte contemporáneo, diseñadas para inspirar y transformar cualquier ambiente.
               </p>
             </FadeIn>
             

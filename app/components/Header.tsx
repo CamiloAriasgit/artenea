@@ -10,7 +10,7 @@ const Header = () => {
     const navLinks = [
         { name: 'Categorías', href: '#Categoria' },
         { name: 'Personalizado', href: '#Personalizado' },
-        { name: 'Contacto', href: '#contacto' },
+        { name: 'Contacto', href: '#Footer' },
     ];
 
     return (

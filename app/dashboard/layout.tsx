@@ -31,7 +31,7 @@ export default async function DashboardLayout({
             <Link href="/dashboard/nuevo" className="text-sm font-medium text-gray-600 hover:text-violet-600 transition-colors">
               + Añadir Nueva
             </Link>
-            <Link href="/tienda" target="_blank" className="text-sm font-medium text-gray-600 hover:text-violet-600 transition-colors">
+            <Link href="/" target="_blank" className="text-sm font-medium text-gray-600 hover:text-violet-600 transition-colors">
               Ver Web ↗
             </Link>
           </div>
