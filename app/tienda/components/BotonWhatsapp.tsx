@@ -7,7 +7,7 @@ interface BotonWhatsappProps {
 }
 
 export default function BotonWhatsapp({ texto, mensajePersonalizado }: BotonWhatsappProps) {
-  const NUMERO_DE_TELEFONO = "573003607632";
+  const NUMERO_DE_TELEFONO = "573218927580";
   
   // Mensaje por defecto si no se pasa uno por props
   const MENSAJE_PREDETERMINADO = mensajePersonalizado || "¡Hola! Me gustaría pedir una obra personalizada.";

@@ -14,7 +14,7 @@ export default function BotonContacto({
   className = "" 
 }: BotonContactoProps) {
   
-  const WHATSAPP_NUMBER = "573003607632"
+  const WHATSAPP_NUMBER = "573218927580"
   const mensaje = encodeURIComponent(`Hola! Me interesa la obra "${tituloObra}"`)
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}`
 
@@ -37,7 +37,6 @@ export default function BotonContacto({
         <MessageCircle size={18} className="z-10" />
         <span className="z-10">{texto}</span>
         
-        {/* Efecto Shimmer */}
         <div className="absolute inset-0 w-1/2 h-full bg-white/10 skew-x-[-20deg] -translate-x-full group-hover:translate-x-[250%] transition-transform duration-1000" />
       </a>
     </div>

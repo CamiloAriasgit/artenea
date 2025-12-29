@@ -15,7 +15,7 @@ export default function BotonReferencia({ tituloObra }: BotonReferenciaProps) {
     setCurrentUrl(window.location.href)
   }, [])
 
-  const WHATSAPP_NUMBER = "573003607632" 
+  const WHATSAPP_NUMBER = "573218927580" 
   const mensaje = encodeURIComponent(
     `¡Hola! Me encantó la obra "${tituloObra}" pero me gustaría solicitar una personalización similar. Aquí está el enlace para referencia: ${currentUrl}`
   )
